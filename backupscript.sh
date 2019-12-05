@@ -161,7 +161,27 @@ wget -N "https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh
 settings:
     clear
     dir=$(cd `dirname $0` && pwd)
-    mkdir -p .files/dir
+    mkdir -p .files
+    touch .files/settings
+
+
+    # find -name '.files/settings'  > liste
+    # number=`grep -c ".mp3" liste`
+    # x=1
+    # while [ $x -le $number ]
+    #     do
+    #       echo $x
+    #       datei=`sed -ne "$x p" liste`
+    #       echo -n "Kommentar zu $datei "
+    #       read kommentar
+    #       echo ""
+    #       echo "$dateicat ist $kommentar"
+    #       x=`expr $x + 1`
+    #     done
+
+
+
+
     clear
   if [ -f `.files/dir/$dir` ]; then
   elif
