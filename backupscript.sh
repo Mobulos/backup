@@ -149,7 +149,8 @@ wget -N "https://raw.githubusercontent.com/Mobulos/backup/Alpha/backupscript.sh"
   chmod +x backupscript.sh
   ./backupscript.sh
   exit
-  else
+elif [[ * ]]; then
+  #statements
 wget -N "https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh"
   chmod +x backupscript.sh
   ./backupscript.sh
@@ -183,7 +184,7 @@ settings:
 
     clear
   if [ -f `.files/dir/$dir` ]; then
-  else
+  elif [[ * ]]; then
     touch ".files/dir/$dir"
     read -t 3 -n 1
     echo "Die Einstellungen können bisher noch nicht geändert werden"
