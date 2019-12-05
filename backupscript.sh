@@ -184,7 +184,7 @@ settings:
 
     clear
   if [ -f `.files/dir/$dir` ]; then
-  elif
+  else
     touch ".files/dir/$dir"
     read -t 3 -n 1
     echo "Die Einstellungen können bisher noch nicht geändert werden"
