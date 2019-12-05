@@ -47,6 +47,11 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 
+function print_my_input(backup) {
+  echo 'Backup Script startet ' $backup
+}
+
+
 
 
 # farbcodes:
@@ -163,22 +168,11 @@ settings:
     mkdir -p .files
     touch .files/settings
 
+    # rr.sh (read remark)
+    echo -n $1 .files/settings " first: "
+    read first
 
-    find '.files/settings'  > liste
-    number=`grep -c ".mp3" liste`
-    x=1
-    while [ $x -le $number ]
-        do
-          echo $x
-          datei=`sed -ne "$x p" liste`
-          echo -n "Kommentar zu $datei "
-          read kommentar
-          echo ""
-          echo "$dateicat ist $kommentar"
-          x=`expr $x + 1`
-        done
-
-
+    echo $1
 
 
     clear
