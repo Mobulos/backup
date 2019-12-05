@@ -159,12 +159,12 @@ wget -N "https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh
 
 settings:
     clear
-    dir=$(cd `dirname $0` && pwd)
+    dir=$(cd `dirname 0` && pwd)
     mkdir -p .files
     touch .files/settings
 
 
-    find -name '.files/settings'  > liste
+    find '.files/settings'  > liste
     number=`grep -c ".mp3" liste`
     x=1
     while [ $x -le $number ]
