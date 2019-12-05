@@ -47,8 +47,8 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 
-function print_my_input(backup) {
-  echo 'Backup Script startet ' $backup
+function print_my_input() {
+  echo 'Backup Script startet' $backup
 }
 
 
