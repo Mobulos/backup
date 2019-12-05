@@ -74,12 +74,12 @@ install:
 
 menue:
   read -t 0.3
-  if [[ -f `debug` ]]; then
-    jumpto menuef
+  if [ -f `debug` ]; then
+    jumpto menuef;
   elif [[ -f `date +%Y-%m-%d` ]]; then
-    jumpto menuef
+    jumpto menuef;
   elif [[ * ]]; then
-    jumpto update
+    jumpto update;
   fi
 
   menuef:
@@ -148,13 +148,12 @@ update:
 wget -N "https://raw.githubusercontent.com/Mobulos/backup/Alpha/backupscript.sh"
   chmod +x backupscript.sh
   ./backupscript.sh
-  exit
-elif [[ * ]]; then
-  #statements
+  exit;
+  elif [[ * ]]; then
 wget -N "https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh"
   chmod +x backupscript.sh
   ./backupscript.sh
-  exit
+  exit;
   fi
 
 
@@ -184,6 +183,7 @@ settings:
 
     clear
   if [ -f `.files/dir/$dir` ]; then
+    exit;
   elif [[ * ]]; then
     touch ".files/dir/$dir"
     read -t 3 -n 1
@@ -191,7 +191,7 @@ settings:
     jumpto menue
     echo "Die einstellungen werden erstellt..."
     mkdir settings
-    exit
+    exit;
   fi
 
 
