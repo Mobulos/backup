@@ -76,7 +76,7 @@ menue:
   read -t 0.3
   if [ -f `debug` ]; then
       jumpto menuef;
-  elif [[ -f `date +%Y-%m-%d` ]]; then
+  elif [ -f `date +%Y-%m-%d` ]; then
   #date +%Y-%m-%d-%H-%M
       jumpto menuef;
   else
@@ -165,19 +165,19 @@ settings:
     touch .files/settings
 
 
-    # find -name '.files/settings'  > liste
-    # number=`grep -c ".mp3" liste`
-    # x=1
-    # while [ $x -le $number ]
-    #     do
-    #       echo $x
-    #       datei=`sed -ne "$x p" liste`
-    #       echo -n "Kommentar zu $datei "
-    #       read kommentar
-    #       echo ""
-    #       echo "$dateicat ist $kommentar"
-    #       x=`expr $x + 1`
-    #     done
+    find -name '.files/settings'  > liste
+    number=`grep -c ".mp3" liste`
+    x=1
+    while [ $x -le $number ]
+        do
+          echo $x
+          datei=`sed -ne "$x p" liste`
+          echo -n "Kommentar zu $datei "
+          read kommentar
+          echo ""
+          echo "$dateicat ist $kommentar"
+          x=`expr $x + 1`
+        done
 
 
 
