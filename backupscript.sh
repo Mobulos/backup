@@ -74,13 +74,12 @@ install:
 
 menue:
   read -t 0.3
-  if [ -f `debug` ]; then
-      jumpto menuef;
-  elif [ -f `date +%Y-%m-%d` ]; then
-  #date +%Y-%m-%d-%H-%M
-      jumpto menuef;
-  else
-    jumpto update;
+  if [[ -f `debug` ]]; then
+    jumpto menuef
+  elif [[ -f `date +%Y-%m-%d` ]]; then
+    jumpto menuef
+  elif [[ * ]]; then
+    jumpto update
   fi
 
   menuef:
