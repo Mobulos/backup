@@ -47,10 +47,6 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 
-function backup() {
-  jumpto menuef $1
-}
-
 
 
 
