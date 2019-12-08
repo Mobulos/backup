@@ -37,8 +37,8 @@ install=${2:-"install"}
 update=${3:-"update"}
 menuef=${4:-"menuef"}
 alpha=${5:-"alpha"}
-settings={6:-"settings"}
-backup={7:-"backup"}
+settings=${6:-"settings"}
+backup=${7:-"backup"}
 
 
 FILE="/tmp/out.$$"
