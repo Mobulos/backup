@@ -164,13 +164,6 @@ settings:
     mkdir -p .files
     touch .files/settings
 
-    # rr.sh (read remark)
-    echo -n $1 .files/settings " first: "
-    read first
-
-    echo $1
-
-
     clear
   if [ -f `.files/dir/$dir` ]; then
     exit;
