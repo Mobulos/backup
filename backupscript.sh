@@ -38,6 +38,8 @@ update=${3:-"update"}
 menuef=${4:-"menuef"}
 alpha=${5:-"alpha"}
 settings={6:-"settings"}
+backup={7:-"backup"}
+
 
 FILE="/tmp/out.$$"
 GREP="/bin/grep"
@@ -62,7 +64,7 @@ reset=`tput sgr0`
 
 
 clear
-if [ -d ".files" ]; then
+if [ -d "file" ]; then
     jumpto menue;
 fi
 
@@ -115,6 +117,7 @@ menue:
     echo "Ich ich funktioniere noch nicht..."
     read -t 3 -n 1
     jumpto menuef
+    # jumpto backup
     ;;
     2)
     echo "Ich komme später dazu!"
@@ -135,6 +138,15 @@ menue:
     exit
     ;;
   esac
+
+
+backup:
+
+
+
+
+
+
 
 
 update:
@@ -159,16 +171,13 @@ wget -N "https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh
 
 
 settings:
-    clear
+  clear
+  if [ -d `/files/` ]; then
     dir=$(cd `dirname 0` && pwd)
-    mkdir -p .files
-    touch .files/settings
-
-    clear
-  if [ -f `.files/dir/$dir` ]; then
+    mkdir -p files
     exit;
   elif [[ * ]]; then
-    touch ".files/dir/$dir"
+    touch "files/dir
     read -t 3 -n 1
     echo "Die Einstellungen können bisher noch nicht geändert werden"
     jumpto menue
