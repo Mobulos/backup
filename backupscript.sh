@@ -172,7 +172,7 @@ wget -N "https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh
 
 settings:
   clear
-  if [ -d `/files/` ]; then
+  if [ -d `./files/` ]; then
     dir=$(cd `dirname 0` && pwd)
     mkdir -p files
     exit;
