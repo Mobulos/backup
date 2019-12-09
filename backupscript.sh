@@ -172,12 +172,12 @@ wget -N "https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh
 
 settings:
   clear
-  if [ -d `./files/` ]; then
+  if [ -d `files` ]; then
     dir=$(cd `dirname 0` && pwd)
     mkdir -p files
     exit;
   elif [[ * ]]; then
-    touch "files/dir
+    touch "files/dir"
     read -t 3 -n 1
     echo "Die Einstellungen können bisher noch nicht geändert werden"
     jumpto menue
