@@ -177,9 +177,8 @@ settings:
     mkdir -p files
     exit;
   elif [[ * ]]; then
-    touch "files/dir
-    read -t 3 -n 1
-    echo "Die Einstellungen können bisher noch nicht geändert werden"
+    touch "files/dir"
+    # wc -l datei.txt | cut -d " " -f 1
     jumpto menue
     echo "Die einstellungen werden erstellt..."
     mkdir settings
