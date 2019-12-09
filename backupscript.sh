@@ -78,7 +78,7 @@ instal:
   apt install nano -y
   apt install zip -y
   apt install unzip -y
-  jumpto settings
+  jumpto settings;
 
 menue:
   read -t 0.3
@@ -178,7 +178,7 @@ wget -N "https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh
 settings:
   clear
   if [ -d "files" ]; then
-    dir=$(cd 'dirname 0' && pwd)
+    dir=$(cd `dirname 0` && pwd)
     mkdir -p files;
   elif [[ * ]]; then
     mkdir -p files
