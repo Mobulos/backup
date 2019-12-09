@@ -33,12 +33,12 @@ function jumpto {
 }
 
 menue=${1:-"menue"}
-# install=${2:-"instalit"}
-# update=${3:-"update"}
-# menuef=${4:-"menuef"}
-# alpha=${5:-"alpha"}
-# settings=${6:-"settings"}
-# backup=${7:-"backup"}
+instal=${2:-"instal"}
+update=${3:-"update"}
+menuef=${4:-"menuef"}
+alpha=${5:-"alpha"}
+settings=${6:-"settings"}
+backup=${7:-"backup"}
 
 
 FILE="/tmp/out.$$"
@@ -69,10 +69,15 @@ if [ -d "file" ]; then
 fi
 
 
-instalit:
+instal:
   apt update
   apt upgrade -y
-  apt install wget -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y
+  apt install wget -y
+  apt install curl -y
+  apt install git -y
+  apt install nano -y
+  apt install zip -y
+  apt install unzip -y
   jumpto settings
 
 menue:
