@@ -177,7 +177,8 @@ settings:
     mkdir -p files
     exit;
   elif [[ * ]]; then
-    touch "files/dir"
+    mkdir -p files
+    touch files/dir
     read -t 3 -n 1
     echo "Die Einstellungen können bisher noch nicht geändert werden"
     jumpto menue
