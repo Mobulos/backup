@@ -69,7 +69,7 @@ fi
 
 
   apt update && apt upgrade -y && apt install wget -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y
-  jumpto settings
+  jumpto $settings
 
 menue:
   read -t 0.3
@@ -173,7 +173,9 @@ settings:
   clear
   if [ -d "files" ]; then
     dir=$(cd `dirname 0` && pwd)
-    mkdir -p files;
+    mkdir -p files
+    echo "ende"
+    exit;
   elif [[ * ]]; then
     mkdir -p files
     touch files/dir
