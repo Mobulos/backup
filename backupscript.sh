@@ -173,14 +173,16 @@ settings:
   clear
   if [ -d "files" ]; then
     dir=$(cd `dirname 0` && pwd)
-    mkdir -p files
-    echo "ende"
+    echo "Die Einstellungen können bisher noch nicht geändert werden"
+    read -t 3 -n 1
+    jumpto menuef
     exit;
   elif [[ * ]]; then
     mkdir -p files
     touch files/dir
     read -t 3 -n 1
     echo "Die Einstellungen können bisher noch nicht geändert werden"
+    read -t 3 -n 1
     jumpto menue
     echo "Die einstellungen werden erstellt..."
     mkdir settings;
