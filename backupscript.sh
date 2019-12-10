@@ -68,7 +68,7 @@ if [ -d "file" ]; then
 fi
 
 
-  apt update && apt upgrade -y && apt install wget -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt upgrade -y
+  apt update && apt upgrade -y && apt install wget -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y && apt upgrade -y
   jumpto $settings
 
 menue:
@@ -137,9 +137,50 @@ menue:
 
 
 backup:
-  echo "An dieser Funktion wird momentan gearbeitet"
-  echo "In Github kannst du abrufen, wenn die Funktion veröffentlicht wurde 'https://github.com/mobulos'"
-  jumpto menuef
+  clear
+  echo
+  bck=""
+  bckto=""
+  nam=""
+  read -e -p "Von welchem Ordner soll ein Backup erstellt werden? " bck
+
+  if [ -d "$bck" ]; then
+    echo;
+  elif [[ * ]]; then
+    echo "Dieser Ordner existiert nicht!"
+    jumpto backup
+  fi
+
+  clear
+  echo "Wo soll das Backup gespeichert werden?"
+  echo
+  echo 'Bitte im folgenden Format angeben: "/pfad/zum/ordner/" '
+  echo
+  read -e -p 'Standardmäßig lautet der Pfad: "/root/backup/" ' bckto
+
+  if [ -z "$bckto" ]; then
+    bckto="/root/backup/"
+    mkdir /root/backup;
+  elif [[ * ]]; then
+    echo;
+  fi
+
+  if [ -d "$bckto" ]; then
+    echo;
+  elif [[ * ]]; then
+    echo "Dieser Ordner existiert nicht!"
+    jumpto backup
+  fi
+
+  clear
+  read -p "Gebe ein Namen für das Backup an: " nam
+  clear
+  tar -czf - $bck | (pv -n > $bckto$nam.tgz) 2>&1 | dialog --gauge "Wallie erstellt ein Backup, ich wusste garnicht, dass das möglich ist......" 10 70 0
+  clear
+  echo "Das Backup wurde ertsellt."
+  echo
+  echo "Bitte beachte, dass du das Backup bissher nur mit diesem Befehl löschen kannst: 'rm $bckto$nam.tgz' "
+
   exit
 
 
@@ -178,15 +219,15 @@ settings:
     jumpto menuef
     exit;
   elif [[ * ]]; then
+    dir=$(cd `dirname 0` && pwd)
     mkdir -p files/{backupfrom,backupto}
     touch files/dir
     echo "$dir" >> files/dir
-
-    read -t 3 -n 1
-    echo "Die Einstellungen können bisher noch nicht geändert werden"
+    clear
+    echo "Die einstellungen werden erstellt..."
     read -t 3 -n 1
     jumpto menue
-    echo "Die einstellungen werden erstellt..."
+    exit;
   fi
 
 
