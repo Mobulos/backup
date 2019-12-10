@@ -68,7 +68,7 @@ if [ -d "file" ]; then
 fi
 
 
-  apt update && apt upgrade -y && apt install wget -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y
+  apt update && apt upgrade -y && apt install wget -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt upgrade -y
   jumpto $settings
 
 menue:
@@ -178,15 +178,15 @@ settings:
     jumpto menuef
     exit;
   elif [[ * ]]; then
-    mkdir -p files
+    mkdir -p files/{backupfrom,backupto}
     touch files/dir
     echo "$dir" >> files/dir
+
     read -t 3 -n 1
     echo "Die Einstellungen können bisher noch nicht geändert werden"
     read -t 3 -n 1
     jumpto menue
     echo "Die einstellungen werden erstellt..."
-    mkdir settings;
   fi
 
 
