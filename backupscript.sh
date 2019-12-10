@@ -68,15 +68,8 @@ if [ -d "file" ]; then
 fi
 
 
-  apt update
-  apt upgrade -y
-  apt install wget -y
-  apt install curl -y
-  apt install git -y
-  apt install nano -y
-  apt install zip -y
-  apt install unzip -y
-  jumpto settings;
+  apt update && apt upgrade -y && apt install wget -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y
+  jumpto settings
 
 menue:
   read -t 0.3
