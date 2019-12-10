@@ -216,7 +216,7 @@ settings:
     dir=$(cd `dirname 0` && pwd)
     echo "Die Einstellungen können bisher noch nicht geändert werden"
     read -t 3 -n 1
-    jumpto menuef
+    jumpto menue
     exit;
   elif [[ * ]]; then
     dir=$(cd `dirname 0` && pwd)
