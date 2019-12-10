@@ -109,11 +109,8 @@ menue:
   clear
   case $befehl in
     1)
-    jumpto start
-    echo "Ich ich funktioniere noch nicht..."
-    read -t 3 -n 1
-    jumpto menuef
-    # jumpto backup
+    jumpto backup
+    exit
     ;;
     2)
     echo "Ich komme später dazu!"
