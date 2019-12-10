@@ -33,7 +33,6 @@ function jumpto {
 }
 
 menue=${1:-"menue"}
-instal=${2:-"instal"}
 update=${3:-"update"}
 menuef=${4:-"menuef"}
 alpha=${5:-"alpha"}
@@ -69,7 +68,6 @@ if [ -d "file" ]; then
 fi
 
 
-instal:
   apt update
   apt upgrade -y
   apt install wget -y
