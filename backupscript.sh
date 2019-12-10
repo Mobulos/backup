@@ -180,6 +180,7 @@ settings:
   elif [[ * ]]; then
     mkdir -p files
     touch files/dir
+    echo "$dir" >> files/dir
     read -t 3 -n 1
     echo "Die Einstellungen können bisher noch nicht geändert werden"
     read -t 3 -n 1
