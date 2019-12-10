@@ -146,7 +146,10 @@ menue:
 
 
 backup:
-
+  echo "An dieser Funktion wird momentan gearbeitet"
+  echo "In Github kannst du abrufen, wenn die Funktion veröffentlicht wurde 'https://github.com/mobulos'"
+  jumpto menuef
+  exit
 
 
 
