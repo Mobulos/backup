@@ -157,12 +157,12 @@ update:
   touch `date +%Y-%m-%d`
   rm backupscript.sh
   if [ -f "alpha" ]; then
-wget -N "https://raw.githubusercontent.com/Mobulos/backup/Alpha/backupscript.sh"
+wget -N "https://raw.githubusercontent.com/Mobulos/backup/Alpha/backupscript.sh" -q --show-progress
   chmod +x backupscript.sh
   ./backupscript.sh
   exit;
   elif [[ * ]]; then
-wget -N "https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh"
+wget -N "https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh"  -q --show-progress
   chmod +x backupscript.sh
   ./backupscript.sh
   exit;
