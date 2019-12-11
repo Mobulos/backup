@@ -33,11 +33,11 @@ function jumpto {
 }
 
 menue=${1:-"menue"}
-update=${3:-"update"}
-menuef=${4:-"menuef"}
-alpha=${5:-"alpha"}
-settings=${6:-"settings"}
-backup=${7:-"backup"}
+update=${2:-"update"}
+menuef=${3:-"menuef"}
+alpha=${4:-"alpha"}
+settings=${5:-"settings"}
+backup=${6:-"backup"}
 
 
 FILE="/tmp/out.$$"
@@ -73,12 +73,10 @@ fi
 
 menue:
   read -t 0.3
-  if [ -f `debug` ]; then
-    jumpto menuef;
-  elif [[ -f `date +%Y-%m-%d` ]]; then
+  if [ -f `date +%Y-%m-%d` ]; then
     jumpto menuef;
   elif [[ * ]]; then
-    jumpto update;
+    jumpto $update;
   fi
 
   menuef:
@@ -86,7 +84,7 @@ menue:
   echo "$yellow########################################"
   echo "######  BackUp Script by Mobulos  ######"
   echo "########################################"
-  # exho "ACHTUNG| Alpha Update |ACHTUNG"
+  # echo "ACHTUNG| Alpha Update |ACHTUNG"
   echo "$reset"
   echo
   echo
@@ -95,7 +93,7 @@ menue:
   read -t 0.2
   echo "[1] Backup starten"
   read -t 0.2
-  echo "[2] Backup löschen"
+  echo "[2] ~Backup löschen~"
   read -t 0.2
   echo "[3] Script Updaten"
   read -t 0.2
@@ -103,8 +101,7 @@ menue:
   read -t 0.2
   echo "[5] Exit"
   echo "$reset"
-  # echo "[] "
-  # read -t 0.2
+  read -t 0.2
   read -n 1 -p "Was willst du tun?: " befehl
   clear
   case $befehl in
@@ -187,7 +184,6 @@ backup:
 
 
 update:
-  load="#"
   echo "$red Die neuste Version wird heruntergeladen"
   echo "$reset"
   read -t 2 -n 1
