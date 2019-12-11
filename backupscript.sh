@@ -68,7 +68,7 @@ if [ -d "file" ]; then
 fi
 
 
-  apt update && apt upgrade -y && apt install wget -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y && apt upgrade -y
+  apt update && apt upgrade -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y && apt upgrade -y
   jumpto $settings
 
 menue:
@@ -195,12 +195,12 @@ update:
   touch `date +%Y-%m-%d`
   rm backupscript.sh
   if [ -f "alpha" ]; then
-wget -N "https://raw.githubusercontent.com/Mobulos/backup/Alpha/backupscript.sh" -q --show-progress
+  curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
   chmod +x backupscript.sh
   ./backupscript.sh
   exit;
   elif [[ * ]]; then
-wget -N "https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh"  -q --show-progress
+  curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
   chmod +x backupscript.sh
   ./backupscript.sh
   exit;
