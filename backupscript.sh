@@ -64,7 +64,7 @@ reset=`tput sgr0`
 
 clear
 if [ -d "file" ]; then
-    jumpto menue;
+    jumpto $menue;
 fi
 
 
@@ -87,13 +87,15 @@ menue:
   # echo "ACHTUNG| Alpha Update |ACHTUNG"
   echo "$reset"
   echo
+  echo 
   echo
-  read -t 0.2
   echo "Auswahlmöglichkeiten"
   read -t 0.2
   echo "[1] Backup starten"
   read -t 0.2
+  echo "$red"
   echo "[2] ~Backup löschen~"
+  echo "$reset"
   read -t 0.2
   echo "[3] Script Updaten"
   read -t 0.2
