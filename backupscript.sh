@@ -63,7 +63,7 @@ reset=`tput sgr0`
 
 
 clear
-if [ -f `config` ]; then
+if [ -f 'config' ]; then
   jumpto menue;
 elif [[ * ]]; then
   apt update && apt upgrade -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y && apt upgrade -y
