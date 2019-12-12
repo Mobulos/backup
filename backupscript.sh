@@ -30,7 +30,7 @@ function jumpto {
   cmd=$(sed -n "/$label:/{:a;n;p;ba};" $0 | grep -v ':$')
   eval "$cmd"
   exit
-}
+  }
 
 menue=${1:-"menue"}
 update=${2:-"update"}
@@ -97,13 +97,15 @@ menue:
   read -t 0.2
   echo -n "$red"
   echo "[2] ~Backup löschen~"
+  read -t 0.2
+  echo "[3] ~Liste der Backups~"
   echo -n "$reset"
   read -t 0.2
-  echo "[3] Script Updaten"
+  echo "[4] Script Updaten"
   read -t 0.2
-  echo "[4] Enstellungen Ändern"
+  echo "[5] Enstellungen Ändern"
   read -t 0.2
-  echo "[5] Exit"
+  echo "[6] Exit"
   echo "$reset"
   read -t 0.2
   read -n 1 -p "Was willst du tun?: " befehl
@@ -119,9 +121,17 @@ menue:
     jumpto menuef
     ;;
     3)
+    echo "Ich komme später dazu!"
+    read -t 3 -n 1
+    jumpto menuef
+    ;;
+    4)
     jumpto update
     ;;
     5)
+    jumpto settings
+    ;;
+    6)
     clear
     exit
     ;;
@@ -142,6 +152,7 @@ backup:
   nam=""
   read -e -p "Von welchem Ordner soll ein Backup erstellt werden? " bck
 
+  echo "$bck" >>
   if [ -d "$bck" ]; then
     echo;
   elif [[ * ]]; then
