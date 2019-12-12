@@ -95,9 +95,9 @@ menue:
   read -t 0.2
   echo "[1] Backup starten"
   read -t 0.2
-  echo -p "$red"
+  echo -n "$red"
   echo "[2] ~Backup löschen~"
-  echo -p "$reset"
+  echo -n "$reset"
   read -t 0.2
   echo "[3] Script Updaten"
   read -t 0.2
