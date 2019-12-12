@@ -63,15 +63,14 @@ reset=`tput sgr0`
 
 
 clear
-if [ -d "files" ]; then
-    jumpto menue;
+if [ -d `files` ]; then
+  jumpto menue;
 elif [[ * ]]; then
-    echo;
+  apt update && apt upgrade -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y && apt upgrade -y
+  jumpto $settings;
 fi
 
 
-  apt update && apt upgrade -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y && apt upgrade -y
-  jumpto $settings
 
 menue:
   read -t 0.3
@@ -89,7 +88,7 @@ menue:
   # echo "ACHTUNG| Alpha Update |ACHTUNG"
   echo "$reset"
   echo
-  echo 
+  echo
   echo
   echo "Auswahlmöglichkeiten"
   read -t 0.2
