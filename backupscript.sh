@@ -65,6 +65,8 @@ reset=`tput sgr0`
 clear
 if [ -d "file" ]; then
     jumpto $menue;
+elif [[ * ]]; then
+    continue;
 fi
 
 
