@@ -66,7 +66,7 @@ clear
 if [ -d "file" ]; then
     jumpto $menue;
 elif [[ * ]]; then
-    continue;
+    echo;
 fi
 
 
@@ -95,9 +95,9 @@ menue:
   read -t 0.2
   echo "[1] Backup starten"
   read -t 0.2
-  echo "$red"
+  echo -p "$red"
   echo "[2] ~Backup löschen~"
-  echo "$reset"
+  echo -p "$reset"
   read -t 0.2
   echo "[3] Script Updaten"
   read -t 0.2
@@ -122,7 +122,7 @@ menue:
     jumpto update
     ;;
     5)
-    echo
+    clear
     exit
     ;;
     *)
