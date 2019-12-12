@@ -64,9 +64,9 @@ reset=`tput sgr0`
 
 clear
 if [ -d "files" ]; then
-    echo;
+    jumpto menue;
 elif [[ * ]]; then
-    jumpto $menue;
+    echo;
 fi
 
 
