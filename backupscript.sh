@@ -205,20 +205,21 @@ update:
   rm 20*
   touch `date +%Y-%m-%d`
   rm backupscript.sh
-  if [ -f "alpha" ]; then
+  # if [ -f "alpha" ]; then
   # curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
-  echo momentan stellen wir keine Beta zur Verfügung.
-  echo Daher werde ich dir nun folgende Version herunterladen: "Stable"
+  echo "momentan stellen wir keine Beta zur Verfügung."
+  echo 'Daher werde ich dir nun folgende Version herunterladen: "Stable" '
   read -t 2
-  chmod +x backupscript.sh
-  ./backupscript.sh
-  exit;
-  elif [[ * ]]; then
+  # chmod +x backupscript.sh
+  # ./backupscript.sh
+  # exit;
+  # elif [[ * ]]; then
+  clear
   curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
   chmod +x backupscript.sh
   ./backupscript.sh
   exit;
-  fi
+  # fi
 
 
 settings:
