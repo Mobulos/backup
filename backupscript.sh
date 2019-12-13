@@ -63,11 +63,11 @@ reset=`tput sgr0`
 
 
 clear
-if [ -f 'config' ]; then
+if [ -f '20*' ]; then
   jumpto menue;
 elif [[ * ]]; then
   apt update && apt upgrade -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y && apt upgrade -y
-  touch config
+  mkdir files
   jumpto $settings;
 fi
 
@@ -146,6 +146,9 @@ menue:
 
 backup:
   clear
+  echo "Folgende Backups exsistieren: "
+  ls files/backup
+  echo
   echo
   bck=""
   bckto=""
@@ -232,7 +235,7 @@ settings:
     exit;
   elif [[ * ]]; then
     dir=$(cd `dirname 0` && pwd)
-    mkdir -p files/{backupfrom,backupto}
+    mkdir -p files/backup
     touch files/dir
     echo "$dir" >> files/dir
     clear
