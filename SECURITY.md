@@ -2,12 +2,13 @@
 
 ## Unterstützte Versionen
 
-U
+
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| 2.x.x   | :white_check_mark: |
+| 1.x.x   | :x:                |
+
 
 ## Melden einer Sicherheitsanfälligkeit
+Wenn du einen Fehler gefunden hast kannst du diesen gerne unter diesen Link melden:
+https://github.com/Mobulos/backup/labels/Sicherheitsfehler
