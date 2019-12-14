@@ -137,6 +137,7 @@ case $befehl in
 	exit
 	;;
 3)
+	rm 20*
 	clear
 	jumpto delete
 	;;
