@@ -95,7 +95,7 @@ menue:
   echo "$yellow########################################"
   echo "######  BackUp Script by Mobulos  ######"
   echo "########################################"
-  # echo "ACHTUNG| Alpha Update |ACHTUNG"
+  echo "ACHTUNG| Alpha Update |ACHTUNG"
   echo
   echo "Version 2.0.2"
   echo "Update 14.12.2019"
