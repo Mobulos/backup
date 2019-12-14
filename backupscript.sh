@@ -39,7 +39,6 @@ function jumpto() {
 menue=${1:-"menue"}
 update=${2:-"update"}
 menuef=${3:-"menuef"}
-alpha=${4:-"alpha"}
 settings=${5:-"settings"}
 backup=${6:-"backup"}
 restore=${7:-"restore"}
@@ -78,6 +77,12 @@ menue:
 jumpto update
 exit
 
+# ███    ███ ███████ ███    ██ ██    ██
+# ████  ████ ██      ████   ██ ██    ██
+# ██ ████ ██ █████   ██ ██  ██ ██    ██
+# ██  ██  ██ ██      ██  ██ ██ ██    ██
+# ██      ██ ███████ ██   ████  ██████
+
 menuef:
 clear
 
@@ -89,18 +94,12 @@ echo "
 ██████  ██   ██  ██████ ██   ██  ██████  ██
 "
 
-# echo "
-#   ___   _   ___ _  ___   _ ___
-#  | _ ) /_\ / __| |/ / | | | _ \
-#  | _ \/ _ \ (__| ' <| |_| |  _/
-#  |___/_/ \_\___|_|\_\\___/|_|
-# "
 echo "$yellow########################################"
 echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
 # echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
-echo "Version 2.0.4"
+echo "Version 2.0.5"
 echo "Update 14.12.2019"
 echo "$reset"
 echo
@@ -182,6 +181,12 @@ case $befehl in
 	;;
 esac
 
+# ██████   █████   ██████ ██   ██ ██    ██ ██████
+# ██   ██ ██   ██ ██      ██  ██  ██    ██ ██   ██
+# ██████  ███████ ██      █████   ██    ██ ██████
+# ██   ██ ██   ██ ██      ██  ██  ██    ██ ██
+# ██████  ██   ██  ██████ ██   ██  ██████  ██
+
 backup:
 clear
 echo "Folgende Backups exsistieren: "
@@ -242,6 +247,12 @@ clear
 echo "Das Backup wurde ertsellt."
 exit
 
+# ██████  ███████ ███████ ████████  ██████  ██████  ███████
+# ██   ██ ██      ██         ██    ██    ██ ██   ██ ██
+# ██████  █████   ███████    ██    ██    ██ ██████  █████
+# ██   ██ ██           ██    ██    ██    ██ ██   ██ ██
+# ██   ██ ███████ ███████    ██     ██████  ██   ██ ███████
+
 restore:
 clear
 read -p "WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N)" warn
@@ -254,6 +265,12 @@ N)
 	echo "Es tut mir leid, doch ich darf das Backup nicht wiederherstellen, wenn Du mich die Daten nicht überschreiben lässt!"
 	;;
 esac
+
+# ██████  ███████ ██      ███████ ████████ ███████
+# ██   ██ ██      ██      ██         ██    ██
+# ██   ██ █████   ██      █████      ██    █████
+# ██   ██ ██      ██      ██         ██    ██
+# ██████  ███████ ███████ ███████    ██    ███████
 
 delete:
 clear
@@ -283,6 +300,12 @@ echo "Das Backup wurde gelöscht!"
 read -t 3 -n 0
 exit
 
+# ██    ██ ██████  ██████   █████  ████████ ███████
+# ██    ██ ██   ██ ██   ██ ██   ██    ██    ██
+# ██    ██ ██████  ██   ██ ███████    ██    █████
+# ██    ██ ██      ██   ██ ██   ██    ██    ██
+#  ██████  ██      ██████  ██   ██    ██    ███████
+
 update:
 if [ -f $(date +%Y-%m-%d) ]; then
 	jumpto menuef
@@ -295,22 +318,25 @@ read -t 2 -n 1
 rm 20*
 touch $(date +%Y-%m-%d)
 rm backupscript.sh
-# if [ -f "alpha" ]; then
-# curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
-echo "momentan stellen wir keine Beta zur Verfügung."
-echo 'Daher werde ich nun folgende Version herunterladen: "Stable" '
-echo
-curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
-read -t 2
-# chmod +x backupscript.sh
-# ./backupscript.sh
-# exit;
-# elif [[ * ]]; then
-clear
-chmod +x backupscript.sh
-./backupscript.sh
-exit
-# fi
+if [ -f ".alpha" ]; then
+	clear
+	curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
+	read -t 1
+	chmod +x backupscript.sh
+	./backupscript.sh
+	exit
+elif [[ * ]]; then
+	clear
+	chmod +x backupscript.sh
+	./backupscript.sh
+	exit
+fi
+
+# ███████ ███████ ████████ ████████ ██ ███    ██  ██████  ███████
+# ██      ██         ██       ██    ██ ████   ██ ██       ██
+# ███████ █████      ██       ██    ██ ██ ██  ██ ██   ███ ███████
+#      ██ ██         ██       ██    ██ ██  ██ ██ ██    ██      ██
+# ███████ ███████    ██       ██    ██ ██   ████  ██████  ███████
 
 settings:
 clear
