@@ -92,7 +92,7 @@ menue:
   echo "########################################"
   # echo "ACHTUNG| Alpha Update |ACHTUNG"
   echo
-  echo
+  echo "Version 2.0.1"
   echo "Update 13.12.2019"
   echo "$reset"
   echo
