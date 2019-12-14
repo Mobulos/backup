@@ -60,7 +60,7 @@ reset=$(tput sgr0)
 1m="tput setaf 18"
 
 clear
-dirif="file"
+dirif="file" 
 if [ -d `$dirif` ]; then
   jumpto menue
 elif [[ * ]]; then
