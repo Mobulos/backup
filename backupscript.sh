@@ -79,7 +79,7 @@ jumpto update
 exit
 
 menuef:
-clear #
+clear
 
 echo "########     ###     ######  ##    ## ##     ## ########"
 echo "##     ##   ## ##   ##    ## ##   ##  ##     ## ##     ##"
