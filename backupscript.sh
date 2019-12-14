@@ -84,7 +84,7 @@ echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
 # echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
-echo "Version 2.0.3"
+echo "Version 2.0.4"
 echo "Update 14.12.2019"
 echo "$reset"
 echo
@@ -301,7 +301,7 @@ settings:
 clear
 if [ -d "files" ]; then
   dir=$(cd $(dirname 0) && pwd)
-  echo "Momentan existierteine Alpha Phase."
+  echo "Momentan existiert eine Alpha Phase."
   read -p "Möchtest du teil ein Teil des Alpha Rings werden? (Y/N)" version
   case version in
   Y | y | J | j)
