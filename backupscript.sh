@@ -92,8 +92,8 @@ menue:
   echo "########################################"
   # echo "ACHTUNG| Alpha Update |ACHTUNG"
   echo
-  echo "Version 2.0.1"
-  echo "Update 13.12.2019"
+  echo "Version 2.0.2"
+  echo "Update 14.12.2019"
   echo "$reset"
   echo
   echo "Auswahlmöglichkeiten"
@@ -116,6 +116,11 @@ menue:
   read -t 0.1
   tmp=`tput setaf 5`
   echo -n "$tmp"
+
+  paste files/backup/name files/backup/list > temp
+  cat -n temp
+  rm temp
+
   echo "[5] Script Updaten"
   read -t 0.1
   tmp=`tput setaf 6`
@@ -255,7 +260,7 @@ restore:
 
 delete:
   clear
-  echo0 "Welche der folgenden Backups möchtest du löschen?"
+  echo "Welche der folgenden Backups möchtest du löschen?"
 
   paste files/backup/name files/backup/list > temp
   cat -n temp
@@ -294,6 +299,7 @@ update:
   # curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
   echo "momentan stellen wir keine Beta zur Verfügung."
   echo 'Daher werde ich nun folgende Version herunterladen: "Stable" '
+  echo
   curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
   read -t 2
   # chmod +x backupscript.sh
