@@ -151,8 +151,6 @@ case $befehl in
 	exit
 	;;
 3)
-	rm 20*
-	clear
 	jumpto delete
 	;;
 4)
@@ -164,6 +162,8 @@ case $befehl in
 	jumpto menuef
 	;;
 5)
+	rm 20*
+	clear
 	jumpto update
 	;;
 6)
