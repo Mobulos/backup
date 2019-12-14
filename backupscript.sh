@@ -63,22 +63,19 @@ clear
 if [ -d $(files) ]; then
   jumpto menue
 elif [[ * ]]; then
+  mkdir files
+  mkdir files/backup
+  touch files/backup/name
+  touch files/backup/list
+  touch files/backup/to
+  touch files/backup/name
   apt update && apt upgrade -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y
   jumpto $settings
 fi
 
 menue:
-mkdir files
-mkdir files/backup
-touch files/backup/name
-touch files/backup/list
-touch files/backup/to
-touch files/backup/name
-if [ -f $(date +%Y-%m-%d) ]; then
-  jumpto menuef
-elif [[ * ]]; then
-  jumpto $update
-fi
+jumpto update
+exit
 
 menuef:
 clear
@@ -260,6 +257,7 @@ Y | y | J | j)
   ;;
 *)
   echo "Der Ordner wurde nicht gelöscht, du musst ihn ggf. selber Löschen!"
+  read -t 5
   ;;
 esac
 sed -i "$delup D" "files/backup/list"
@@ -271,6 +269,11 @@ read -t 3 -n 0
 exit
 
 update:
+if [ -f $(date +%Y-%m-%d) ]; then
+  jumpto menuef
+elif [[ * ]]; then
+  clear
+fi
 echo "$red Die neuste Version wird heruntergeladen"
 echo "$reset"
 read -t 2 -n 1
