@@ -30,10 +30,10 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 function jumpto() {
-  label=$1
-  cmd=$(sed -n "/$label:/{:a;n;p;ba};" $0 | grep -v ':$')
-  eval "$cmd"
-  exit
+	label=$1
+	cmd=$(sed -n "/$label:/{:a;n;p;ba};" $0 | grep -v ':$')
+	eval "$cmd"
+	exit
 }
 
 menue=${1:-"menue"}
@@ -47,8 +47,8 @@ restore=${7:-"restore"}
 FILE="/tmp/out.$$"
 GREP="/bin/grep"
 if [ "$(id -u)" != "0" ]; then
-  echo "Das Script muss als root gestartet werden." 1>&2
-  exit 1
+	echo "Das Script muss als root gestartet werden." 1>&2
+	exit 1
 fi
 
 # farbcodes:
@@ -60,18 +60,18 @@ reset=$(tput sgr0)
 1m="tput setaf 18"
 
 clear
-dirif="file" 
-if [ -d `$dirif` ]; then
-  jumpto menue
+dirif="file"
+if [ -d $($dirif) ]; then
+	jumpto menue
 elif [[ * ]]; then
-  mkdir files
-  mkdir files/backup
-  touch files/backup/name
-  touch files/backup/list
-  touch files/backup/to
-  touch files/backup/name
-  apt update && apt upgrade -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y
-  jumpto $settings
+	mkdir files
+	mkdir files/backup
+	touch files/backup/name
+	touch files/backup/list
+	touch files/backup/to
+	touch files/backup/name
+	apt update && apt upgrade -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y
+	jumpto $settings
 fi
 
 menue:
@@ -129,41 +129,41 @@ read -n 1 -p "Was willst du tun?: " befehl
 clear
 case $befehl in
 1)
-  jumpto backup
-  exit
-  ;;
+	jumpto backup
+	exit
+	;;
 1)
-  jumpto restore
-  exit
-  ;;
+	jumpto restore
+	exit
+	;;
 3)
-  clear
-  jumpto delete
-  ;;
+	clear
+	jumpto delete
+	;;
 4)
-  clear
-  paste files/backup/name files/backup/list >temp
-  cat -n temp
-  rm temp
-  read -n 1
-  jumpto menuef
-  ;;
+	clear
+	paste files/backup/name files/backup/list >temp
+	cat -n temp
+	rm temp
+	read -n 1
+	jumpto menuef
+	;;
 5)
-  jumpto update
-  ;;
+	jumpto update
+	;;
 6)
-  jumpto settings
-  ;;
+	jumpto settings
+	;;
 7)
-  clear
-  exit
-  ;;
+	clear
+	exit
+	;;
 *)
-  echo "Dieser Befehl existiert nicht!"
-  read -t 3 -n 1
-  jumpto menuef
-  exit
-  ;;
+	echo "Dieser Befehl existiert nicht!"
+	read -t 3 -n 1
+	jumpto menuef
+	exit
+	;;
 esac
 
 backup:
@@ -181,10 +181,10 @@ bckto=""
 nam=""
 read -e -p "Von welchem Ordner soll ein Backup erstellt werden? " bck
 if [ -d "$bck" ]; then
-  echo
+	echo
 elif [[ * ]]; then
-  echo "Dieser Ordner existiert nicht!"
-  jumpto backup
+	echo "Dieser Ordner existiert nicht!"
+	jumpto backup
 fi
 
 clear
@@ -195,24 +195,24 @@ echo
 read -e -p 'Standardmäßig lautet der Pfad: "/root/backup/" ' bckto
 
 if [ -z "$bckto" ]; then
-  bckto="/root/backup/"
-  mkdir /root/backup
-  clear
+	bckto="/root/backup/"
+	mkdir /root/backup
+	clear
 elif [[ * ]]; then
-  echo
+	echo
 fi
 
 clear
 if [ -d "$bckto" ]; then
-  echo
+	echo
 elif [[ * ]]; then
-  echo "Dieser Ordner existiert nicht!"
-  for i in . .. ...; do
-    echo "Daher wird er nun erstellt $i"
-    read -t 1
-  done
-  mkdir $bckto
-  echo
+	echo "Dieser Ordner existiert nicht!"
+	for i in . .. ...; do
+		echo "Daher wird er nun erstellt $i"
+		read -t 1
+	done
+	mkdir $bckto
+	echo
 fi
 
 clear
@@ -233,12 +233,12 @@ clear
 read -p "WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N)" warn
 case warn in
 Y)
-  (tar -xzf test.tar.gz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
-  clear
-  ;;
+	(tar -xzf test.tar.gz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
+	clear
+	;;
 N)
-  echo "Es tut mir leid, doch ich darf das Backup nicht wiederherstellen, wenn Du mich die Daten nicht überschreiben lässt!"
-  ;;
+	echo "Es tut mir leid, doch ich darf das Backup nicht wiederherstellen, wenn Du mich die Daten nicht überschreiben lässt!"
+	;;
 esac
 
 delete:
@@ -254,12 +254,12 @@ del=$(sed -ne "$delup"'p' files/backup/to)
 read -p "Der Ordner '$del' wird gelöscht! (Y/N)" delyn
 case delyn in
 Y | y | J | j)
-  rm -r $del
-  ;;
+	rm -r $del
+	;;
 *)
-  echo "Der Ordner wurde nicht gelöscht, du musst ihn ggf. selber Löschen!"
-  read -t 5
-  ;;
+	echo "Der Ordner wurde nicht gelöscht, du musst ihn ggf. selber Löschen!"
+	read -t 5
+	;;
 esac
 sed -i "$delup D" "files/backup/list"
 sed -i "$delup D" "files/backup/name"
@@ -271,9 +271,9 @@ exit
 
 update:
 if [ -f $(date +%Y-%m-%d) ]; then
-  jumpto menuef
+	jumpto menuef
 elif [[ * ]]; then
-  clear
+	clear
 fi
 echo "$red Die neuste Version wird heruntergeladen"
 echo "$reset"
@@ -301,35 +301,35 @@ exit
 settings:
 clear
 if [ -d "files" ]; then
-  dir=$(cd $(dirname 0) && pwd)
-  echo "Momentan existiert eine Alpha Phase."
-  read -p "Möchtest du teil ein Teil des Alpha Rings werden? (Y/N)" version
-  case version in
-  Y | y | J | j)
-    touch .alpha
-    read -t 3 "Du Bist nun Teil des Beta Rings."
-    jumpto update
-    exit
-    ;;
-  *)
-    rm .alpha
-    clear
-    echo "Ab jetzt bist du kein Alpha Tester (mehr)."
-    jumpto update
-    exit
-    ;;
-  esac
+	dir=$(cd $(dirname 0) && pwd)
+	echo "Momentan existiert eine Alpha Phase."
+	read -p "Möchtest du teil ein Teil des Alpha Rings werden? (Y/N)" version
+	case version in
+	Y | y | J | j)
+		touch .alpha
+		read -t 3 "Du Bist nun Teil des Beta Rings."
+		jumpto update
+		exit
+		;;
+	*)
+		rm .alpha
+		clear
+		echo "Ab jetzt bist du kein Alpha Tester (mehr)."
+		jumpto update
+		exit
+		;;
+	esac
 elif [[ * ]]; then
-  dir=$(cd $(dirname 0) && pwd)
-  mkdir -p files/backup
-  rm files/dir
-  touch files/dir
-  echo "$dir" >>files/dir
-  clear
-  echo "Die einstellungen werden erstellt..."
-  read -t 3 -n 1
-  jumpto menue
-  exit
+	dir=$(cd $(dirname 0) && pwd)
+	mkdir -p files/backup
+	rm files/dir
+	touch files/dir
+	echo "$dir" >>files/dir
+	clear
+	echo "Die einstellungen werden erstellt..."
+	read -t 3 -n 1
+	jumpto menue
+	exit
 fi
 
 exit
