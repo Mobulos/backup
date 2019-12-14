@@ -304,10 +304,23 @@ settings:
 clear
 if [ -d "files" ]; then
   dir=$(cd $(dirname 0) && pwd)
-  echo "Die Einstellungen können bisher noch nicht geändert werden"
-  read -t 3 -n 1
-  jumpto menue
-  exit
+  echo "Momentan existierteine Alpha Phase."
+  read -p "Möchtest du teil ein Teil des Alpha Rings werden? (Y/N)" version
+  case version in
+  Y | y | J | j)
+    touch .alpha
+    read -t 3 "Du Bist nun Teil des Beta Rings."
+    jumpto update
+    exit
+    ;;
+  *)
+    rm .alpha
+    clear
+    echo "Ab jetzt bist du kein Alpha Tester (mehr)."
+    jumpto update
+    exit
+    ;;
+  esac
 elif [[ * ]]; then
   dir=$(cd $(dirname 0) && pwd)
   mkdir -p files/backup
