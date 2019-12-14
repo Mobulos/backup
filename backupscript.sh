@@ -1,3 +1,8 @@
+#!/bin/bash
+# Init
+#
+#
+#
 # BSD 2-Clause License
 #
 # Copyright (c) 2019, Fabian Schmeltzer
@@ -324,6 +329,7 @@ settings:
   elif [[ * ]]; then
     dir=$(cd `dirname 0` && pwd)
     mkdir -p files/backup
+    rm files/dir
     touch files/dir
     echo "$dir" >> files/dir
     clear
