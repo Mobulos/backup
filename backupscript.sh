@@ -59,6 +59,8 @@ reset=$(tput sgr0)
 #menü
 1m="tput setaf 18"
 
+mkdir files
+mkdir files/backup
 touch files/backup/name
 touch files/backup/list
 touch files/backup/to
@@ -69,8 +71,6 @@ if [ -d $(files) ]; then
   jumpto menue
 elif [[ * ]]; then
   apt update && apt upgrade -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y
-  mkdir files
-  mkdir files/backup
   jumpto $settings
 fi
 
