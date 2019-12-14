@@ -60,7 +60,8 @@ reset=$(tput sgr0)
 1m="tput setaf 18"
 
 clear
-if [ -d `files` ]; then
+dirif="file"
+if [ -d `$dirif` ]; then
   jumpto menue
 elif [[ * ]]; then
   mkdir files
