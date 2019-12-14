@@ -60,8 +60,8 @@ reset=$(tput sgr0)
 1m="tput setaf 18"
 
 clear
-dirif="file"
-if [ -d $($dirif) ]; then
+
+if [[ -d "files" ]]; then
 	jumpto menue
 elif [[ * ]]; then
 	mkdir files
@@ -227,8 +227,6 @@ echo "Das Backup wurde ertsellt."
 exit
 
 restore:
-clear
-
 clear
 read -p "WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N)" warn
 case warn in
