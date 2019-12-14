@@ -1,3 +1,5 @@
+# Was ist das?
+Unser sogennantes
 # backup
 Das Script soll leicht zu bedienen sein.
 Es sollte für jegliche Art von Anwendern geeignet sein.
