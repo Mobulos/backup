@@ -59,13 +59,6 @@ reset=$(tput sgr0)
 #menü
 1m="tput setaf 18"
 
-mkdir files
-mkdir files/backup
-touch files/backup/name
-touch files/backup/list
-touch files/backup/to
-touch files/backup/name
-
 clear
 if [ -d $(files) ]; then
   jumpto menue
@@ -75,6 +68,12 @@ elif [[ * ]]; then
 fi
 
 menue:
+mkdir files
+mkdir files/backup
+touch files/backup/name
+touch files/backup/list
+touch files/backup/to
+touch files/backup/name
 if [ -f $(date +%Y-%m-%d) ]; then
   jumpto menuef
 elif [[ * ]]; then
