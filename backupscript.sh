@@ -1,28 +1,33 @@
 #!/bin/bash
 # Init
-
-# MIT License
 #
-# Copyright (c) 2019 Mobulos
 #
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
 #
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
+# BSD 2-Clause License
 #
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
+# Copyright (c) 2019, Fabian Schmeltzer
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# 1. Redistributions of source code must retain the above copyright notice, this
+#    list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 function jumpto {
@@ -38,6 +43,7 @@ menuef=${3:-"menuef"}
 alpha=${4:-"alpha"}
 settings=${5:-"settings"}
 backup=${6:-"backup"}
+restore=${7:-"restore"}
 
 
 FILE="/tmp/out.$$"
@@ -59,22 +65,25 @@ reset=`tput sgr0`
   #menü
   1m="tput setaf 18"
 
+  touch files/backup/name
+  touch files/backup/list
+  touch files/backup/to
 
 
 
 clear
-if [ -f '20*' ]; then
+if [ -d `files` ]; then
   jumpto menue;
 elif [[ * ]]; then
-  apt update && apt upgrade -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y && apt upgrade -y
+  apt update && apt upgrade -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y
   mkdir files
+  mkdir files/backup
   jumpto $settings;
 fi
 
 
 
 menue:
-  read -t 0.3
   if [ -f `date +%Y-%m-%d` ]; then
     jumpto menuef;
   elif [[ * ]]; then
@@ -87,27 +96,47 @@ menue:
   echo "######  BackUp Script by Mobulos  ######"
   echo "########################################"
   # echo "ACHTUNG| Alpha Update |ACHTUNG"
+  echo
+  echo "Version 2.0.2"
+  echo "Update 14.12.2019"
   echo "$reset"
-  echo
-  echo
   echo
   echo "Auswahlmöglichkeiten"
-  read -t 0.2
-  echo "[1] Backup starten"
-  read -t 0.2
-  echo -n "$red"
-  echo "[2] ~Backup löschen~"
-  read -t 0.2
-  echo "[3] ~Liste der Backups~"
-  echo -n "$reset"
-  read -t 0.2
-  echo "[4] Script Updaten"
-  read -t 0.2
-  echo "[5] Enstellungen Ändern"
-  read -t 0.2
-  echo "[6] Exit"
+  read -t 0.1
+  tmp=`tput setaf 1`
+  echo "$tmp"
+  echo "[1] Backup erstellen"
+  read -t 0.1
+  tmp=`tput setaf 2`
+  echo -n "$tmp"
+  echo "[2] Backup wiederherstellen"
+  read -t 0.1
+  tmp=`tput setaf 3`
+  echo -n "$tmp"
+  echo "[3] Backup löschen"
+  read -t 0.1
+  tmp=`tput setaf 4`
+  echo -n "$tmp"
+  echo "[4] Liste der Backups"
+  read -t 0.1
+  tmp=`tput setaf 5`
+  echo -n "$tmp"
+
+  paste files/backup/name files/backup/list > temp
+  cat -n temp
+  rm temp
+
+  echo "[5] Script Updaten"
+  read -t 0.1
+  tmp=`tput setaf 6`
+  echo -n "$tmp"
+  echo "[6] Enstellungen Ändern"
+  read -t 0.1
+  tmp=`tput setaf 7`
+  echo -n "$tmp"
+  echo "[7] Exit"
   echo "$reset"
-  read -t 0.2
+  read -t 0.1
   read -n 1 -p "Was willst du tun?: " befehl
   clear
   case $befehl in
@@ -115,23 +144,29 @@ menue:
     jumpto backup
     exit
     ;;
-    2)
-    echo "Ich komme später dazu!"
-    read -t 3 -n 1
-    jumpto menuef
+    1)
+    jumpto restore
+    exit
     ;;
     3)
-    echo "Ich komme später dazu!"
-    read -t 3 -n 1
-    jumpto menuef
+    clear
+    jumpto delete
     ;;
     4)
-    jumpto update
+    clear
+    paste files/backup/name files/backup/list > temp
+    cat -n temp
+    rm temp
+    read -n 1
+    jumpto menuef
     ;;
     5)
-    jumpto settings
+    jumpto update
     ;;
     6)
+    jumpto settings
+    ;;
+    7)
     clear
     exit
     ;;
@@ -147,15 +182,17 @@ menue:
 backup:
   clear
   echo "Folgende Backups exsistieren: "
-  ls files/backup
+
+  paste files/backup/name files/backup/list > temp
+  cat -n temp
+  rm temp
+
   echo
   echo
   bck=""
   bckto=""
   nam=""
   read -e -p "Von welchem Ordner soll ein Backup erstellt werden? " bck
-
-  echo "$bck" >>
   if [ -d "$bck" ]; then
     echo;
   elif [[ * ]]; then
@@ -172,31 +209,86 @@ backup:
 
   if [ -z "$bckto" ]; then
     bckto="/root/backup/"
-    mkdir /root/backup;
+    mkdir /root/backup
+    clear;
   elif [[ * ]]; then
     echo;
   fi
 
+  clear
   if [ -d "$bckto" ]; then
     echo;
   elif [[ * ]]; then
     echo "Dieser Ordner existiert nicht!"
-    jumpto backup
+    echo "Daher wird er nun erstellt."
+    read -t 0.5
+    clear
+    echo "Dieser Ordner existiert nicht!"
+    echo "Daher wird er nun erstellt.."
+    read -t 0.5
+    clear
+    echo "Dieser Ordner existiert nicht!"
+    echo "Daher wird er nun erstellt..."
+    read -t 0.5
+    mkdir $bckto
+    echo;
   fi
 
   clear
   read -p "Gebe ein Namen für das Backup an: " nam
   clear
-  tar -czf - $bck | (pv -n > $bckto$nam.tgz) 2>&1 | dialog --gauge "Wallie erstellt ein Backup, ich wusste garnicht, dass das möglich ist......" 10 70 0
+  echo "$nam" >> files/backup/name
+  echo "$bck" >> files/backup/list
+  echo "$bckto" >> files/backup/to
+  tar -cpz $bck | (pv -n > $bckto$nam.tgz) 2>&1 | dialog --gauge "Wallie erstellt ein Backup, ich wusste garnicht, dass das möglich ist......" 10 70 0
   clear
   echo "Das Backup wurde ertsellt."
-  echo
-  echo "Bitte beachte, dass du das Backup bissher nur mit diesem Befehl löschen kannst: 'rm $bckto$nam.tgz' "
-
   exit
 
 
+restore:
+  clear
 
+  clear
+  read -p "WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N)" warn
+  case warn in
+    Y)
+    ( tar -xzf test.tar.gz -C / ) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
+    clear
+    ;;
+    N)
+    echo "Es tut mir leid, doch ich darf das Backup nicht wiederherstellen, wenn Du mich die Daten nicht überschreiben lässt!"
+    ;;
+  esac
+
+
+
+delete:
+  clear
+  echo "Welche der folgenden Backups möchtest du löschen?"
+
+  paste files/backup/name files/backup/list > temp
+  cat -n temp
+  rm temp
+
+  read -p "Bitte gebe die Zahl von dem Backup ein " delup
+  del=$(sed -ne "$delup"'p' files/backup/to)
+  read -p "Der Ordner '$del' wird gelöscht! (Y/N)" delyn
+  case delyn in
+    Y|y|J|j)
+    rm -r $del
+    ;;
+    *)
+    echo "Der Ordner wurde nicht gelöscht, du musst ihn ggf. selber Löschen!"
+    ;;
+  esac
+  sed -i "$delup D" "files/backup/list"
+  sed -i "$delup D" "files/backup/name"
+  sed -i "$delup D" "files/backup/to"
+  clear
+  echo "Das Backup wurde gelöscht!"
+  read -t 3 -n 0
+  exit
 
 
 
@@ -211,14 +303,15 @@ update:
   # if [ -f "alpha" ]; then
   # curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
   echo "momentan stellen wir keine Beta zur Verfügung."
-  echo 'Daher werde ich dir nun folgende Version herunterladen: "Stable" '
+  echo 'Daher werde ich nun folgende Version herunterladen: "Stable" '
+  echo
+  curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
   read -t 2
   # chmod +x backupscript.sh
   # ./backupscript.sh
   # exit;
   # elif [[ * ]]; then
   clear
-  curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
   chmod +x backupscript.sh
   ./backupscript.sh
   exit;
@@ -236,6 +329,7 @@ settings:
   elif [[ * ]]; then
     dir=$(cd `dirname 0` && pwd)
     mkdir -p files/backup
+    rm files/dir
     touch files/dir
     echo "$dir" >> files/dir
     clear
