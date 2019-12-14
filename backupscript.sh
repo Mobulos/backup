@@ -62,6 +62,7 @@ reset=$(tput sgr0)
 touch files/backup/name
 touch files/backup/list
 touch files/backup/to
+touch files/backup/name
 
 clear
 if [ -d $(files) ]; then
@@ -87,7 +88,7 @@ echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
 # echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
-echo "Version 2.0.2"
+echo "Version 2.0.3"
 echo "Update 14.12.2019"
 echo "$reset"
 echo
@@ -209,16 +210,10 @@ if [ -d "$bckto" ]; then
   echo
 elif [[ * ]]; then
   echo "Dieser Ordner existiert nicht!"
-  echo "Daher wird er nun erstellt."
-  read -t 0.5
-  clear
-  echo "Dieser Ordner existiert nicht!"
-  echo "Daher wird er nun erstellt.."
-  read -t 0.5
-  clear
-  echo "Dieser Ordner existiert nicht!"
-  echo "Daher wird er nun erstellt..."
-  read -t 0.5
+  for i in . .. ...; do
+    echo "Daher wird er nun erstellt $i"
+    read -t 1
+  done
   mkdir $bckto
   echo
 fi
