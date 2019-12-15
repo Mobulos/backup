@@ -38,10 +38,9 @@ function jumpto() {
 
 menue=${1:-"menue"}
 update=${2:-"update"}
-menuef=${3:-"menuef"}
-settings=${5:-"settings"}
-backup=${6:-"backup"}
-restore=${7:-"restore"}
+settings=${3:-"settings"}
+backup=${4:-"backup"}
+restore=${5:-"restore"}
 
 FILE="/tmp/out.$$"
 GREP="/bin/grep"
@@ -51,17 +50,18 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 # farbcodes:
-red=$($(tput setaf 1))
-green=$($(tput setaf 2))
-yellow=$($(tput setaf 3))
-reset=$($(tput sgr0))
+
+red=($(tput setaf 1))
+green=($(tput setaf 2))
+yellow=($(tput setaf 3))
+reset=($(tput sgr0))
+
 #menü
-1m="tput setaf 18"
 
 clear
 
 if [[ -d "files" ]]; then
-	jumpto menue
+	jumpto update
 elif [[ * ]]; then
 	mkdir files
 	mkdir files/backup
@@ -73,17 +73,13 @@ elif [[ * ]]; then
 	jumpto $settings
 fi
 
-menue:
-jumpto update
-exit
-
 # ███    ███ ███████ ███    ██ ██    ██
 # ████  ████ ██      ████   ██ ██    ██
 # ██ ████ ██ █████   ██ ██  ██ ██    ██
 # ██  ██  ██ ██      ██  ██ ██ ██    ██
 # ██      ██ ███████ ██   ████  ██████
 
-menuef:
+menue:
 clear
 
 echo "
@@ -99,42 +95,37 @@ echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
 # echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
-echo "Version 2.0.5"
+echo "Version 2.0.6"
 echo "Update 14.12.2019"
 echo "$reset"
 echo
 echo "Auswahlmöglichkeiten"
 read -t 0.1
-tmp=$(tput setaf 1)
+tmp=($(tput setaf 1))
 echo "$tmp"
 echo "[1] Backup erstellen"
 read -t 0.1
-tmp=$(tput setaf 2)
+tmp=($(tput setaf 2))
 echo -n "$tmp"
 echo "[2] Backup wiederherstellen"
 read -t 0.1
-tmp=$(tput setaf 3)
+tmp=($(tput setaf 3))
 echo -n "$tmp"
 echo "[3] Backup löschen"
 read -t 0.1
-tmp=$(tput setaf 4)
+tmp=($(tput setaf 4))
 echo -n "$tmp"
 echo "[4] Liste der Backups"
 read -t 0.1
-tmp=$(tput setaf 5)
+tmp=($(tput setaf 5))
 echo -n "$tmp"
-
-paste files/backup/name files/backup/list >temp
-cat -n temp
-rm temp
-
 echo "[5] Script Updaten"
 read -t 0.1
-tmp=$(tput setaf 6)
+tmp=($(tput setaf 6))
 echo -n "$tmp"
 echo "[6] Enstellungen Ändern"
 read -t 0.1
-tmp=$(tput setaf 7)
+tmp=($(tput setaf 7))
 echo -n "$tmp"
 echo "[7] Exit"
 echo "$reset"
@@ -155,11 +146,13 @@ case $befehl in
 	;;
 4)
 	clear
+	echo "Follgende Backups wurden erstellt: "
 	paste files/backup/name files/backup/list >temp
 	cat -n temp
 	rm temp
+
 	read -n 1
-	jumpto menuef
+	jumpto menue
 	;;
 5)
 	rm 20*
@@ -176,7 +169,7 @@ case $befehl in
 *)
 	echo "Dieser Befehl existiert nicht!"
 	read -t 3 -n 1
-	jumpto menuef
+	jumpto menue
 	exit
 	;;
 esac
@@ -282,7 +275,7 @@ rm temp
 
 read -p "Bitte gebe die Zahl von dem Backup ein " delup
 del=$(sed -ne "$delup"'p' files/backup/to)
-read -p "Der Ordner '$del' wird gelöscht! (Y/N)" delyn
+read -p "Der Ordner '$del' wird gelöscht! (Y/N) " delyn
 case delyn in
 Y | y | J | j)
 	rm -r $del
@@ -308,7 +301,7 @@ exit
 
 update:
 if [ -f $(date +%Y-%m-%d) ]; then
-	jumpto menuef
+	jumpto menue
 elif [[ * ]]; then
 	clear
 fi
@@ -317,16 +310,23 @@ echo "$reset"
 read -t 2 -n 1
 rm 20*
 touch $(date +%Y-%m-%d)
+clear
 rm backupscript.sh
 if [ -f ".alpha" ]; then
+	echo "Die Alpha Version steht noch nicht zur verfügung!"
+	read -t 2
 	clear
+	echo "$red"
 	curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
+	echo "$reset"
 	read -t 1
 	chmod +x backupscript.sh
 	./backupscript.sh
 	exit
 elif [[ * ]]; then
 	clear
+	curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
+	read -t 1
 	chmod +x backupscript.sh
 	./backupscript.sh
 	exit
@@ -340,36 +340,24 @@ fi
 
 settings:
 clear
-if [ -d "files" ]; then
-	dir=$(cd $(dirname 0) && pwd)
-	echo "Momentan existiert eine Alpha Phase."
-	read -p "Möchtest du teil ein Teil des Alpha Rings werden? (Y/N)" version
-	case version in
-	Y | y | J | j)
-		touch .alpha
-		read -t 3 "Du Bist nun Teil des Beta Rings."
-		jumpto update
-		exit
-		;;
-	*)
-		rm .alpha
-		clear
-		echo "Ab jetzt bist du kein Alpha Tester (mehr)."
-		jumpto update
-		exit
-		;;
-	esac
-elif [[ * ]]; then
-	dir=$(cd $(dirname 0) && pwd)
-	mkdir -p files/backup
-	rm files/dir
-	touch files/dir
-	echo "$dir" >>files/dir
+dir=$(cd $(dirname 0) && pwd)
+read -p "Möchtest du teil ein Teil des Alpha Rings werden? (Y/N)" version
+case version in
+Y | y | J | j)
+	touch .alpha
+	read -t 3 "Du Bist nun Teil des Alpha Rings."
+	;;
+*)
+	rm .alpha
 	clear
-	echo "Die einstellungen werden erstellt..."
-	read -t 3 -n 1
-	jumpto menue
-	exit
-fi
-
+	echo "Ab jetzt bist du kein Alpha Tester (mehr)."
+	;;
+esac
+rm files/dir
+touch files/dir
+echo "$dir" >>files/dir
+clear
+echo "Die einstellungen wurden erstellt..."
+read -t 3 -n 1
+jumpto update
 exit
