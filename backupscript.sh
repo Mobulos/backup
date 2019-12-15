@@ -358,48 +358,59 @@ echo "[1] Alpha Updates"
 tmp=($(tput setaf 2))
 echo "$tmp"
 echo "[2] Zurück zum Menü"
-read -p -n 1 "Was mächtest du ändern?"
-if [ -f ".alpha" ]; then
-	echo "Du bist bereits im Alpha ring!"
-	echo
-	read -n 1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " version
-	case version in
-		Y)
-			rm .alpha
-			clear
-			echo "Du erhältst nun keine Test-Versionen mehr!"
-			read -t 3
-			jumpto update
-			exit
-			;;
-		N)
-			touch .alpha
-			echo "Du erhälstst weiterhin Alpha Updates."
-			read -t 3
-			jumpto update
-			;;
-	esac
+read -n 1 -p "Was mächtest du ändern?" set
+case set in
+	1)
+		if [ -f ".alpha" ]; then
+			echo "Du bist bereits im Alpha ring!"
+			echo
+			read -n 1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " version
+			case version in
+				Y)
+					rm .alpha
+					clear
+					echo "Du erhältst nun keine Test-Versionen mehr!"
+					read -t 3
+					jumpto update
+					exit
+					;;
+				N)
+					touch .alpha
+					echo "Du erhälstst weiterhin Alpha Updates."
+					read -t 3
+					jumpto update
+					;;
+			esac
+		elif [[ * ]]; then
+			read -n 1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " version
+			case version in
+				Y)
+					touch .alpha
+					clear
+					echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
+					;;
 
-elif [[ * ]]; then
-	read -n 1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " version
-	case version in
-		Y)
-			touch .alpha
-			clear
-			echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
-			;;
-
-		N)
-			rm .alpha
-			clear
-			echo "Du erhältst nun keine Test-Versionen mehr!"
-			read -t 3
-			jumpto update
-			exit
-			;;
-	esac
-
-fi
+				N)
+					rm .alpha
+					clear
+					echo "Du erhältst nun keine Test-Versionen mehr!"
+					read -t 3
+					jumpto update
+					exit
+					;;
+			esac
+		fi
+		;;
+	2)
+		jumpto menue
+		exit
+		;;
+	*)
+		read -n 1 "Eingabe nicht erkannt"
+		jumpto settings
+		exit
+		;;
+esac
 
 dir=$(cd $(dirname 0) && pwd)
 rm files/dir
