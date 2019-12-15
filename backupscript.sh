@@ -95,7 +95,7 @@ echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
 # echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
-echo "Version 2.0.6"
+echo "Version 2.0.7"
 echo "Update 14.12.2019"
 echo "$reset"
 echo
@@ -206,7 +206,7 @@ echo "Wo soll das Backup gespeichert werden?"
 echo
 echo 'Bitte im folgenden Format angeben: "/pfad/zum/ordner/" '
 echo
-read -e -p 'Standardmäßig lautet der Pfad: "/root/backup/" '         bckto
+read -e -p 'Standardmäßig lautet der Pfad: "/root/backup/" '           bckto
 
 if [ -z "$bckto" ]; then
 	bckto="/root/backup/"
@@ -230,12 +230,12 @@ elif [[ * ]]; then
 fi
 
 clear
-read -p "Gebe ein Namen für das Backup an: "     nam
+read -p "Gebe ein Namen für das Backup an: "      nam
 clear
 echo "$nam" >> files/backup/name
 echo "$bck" >> files/backup/list
 echo "$bckto" >> files/backup/to
-tar -cpz $bck | (pv -n > $bckto$nam.tgz) 2>&1 | dialog --gauge "Wallie erstellt ein Backup, ich wusste garnicht, dass das möglich ist......"    10 70 0
+tar -cpz $bck | (pv -n > $bckto$nam.tgz) 2>&1 | dialog --gauge "Wallie erstellt ein Backup, ich wusste garnicht, dass das möglich ist......"     10 70 0
 clear
 echo "Das Backup wurde ertsellt."
 exit
@@ -248,7 +248,7 @@ exit
 
 restore:
 clear
-read -p "WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N)"     warn
+read -p "WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N)"      warn
 case warn in
 	Y)
 		(tar -xzf test.tar.gz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
@@ -275,7 +275,7 @@ rm temp
 
 read -p "Bitte gebe die Zahl von dem Backup ein " delup
 del=$(sed -ne "$delup"'p' files/backup/to)
-read -p "Der Ordner '$del' wird gelöscht! (Y/N) "     delyn
+read -p "Der Ordner '$del' wird gelöscht! (Y/N) "      delyn
 case delyn in
 	Y | y | J | j)
 		rm -r $del
@@ -341,7 +341,7 @@ fi
 settings:
 clear
 dir=$(cd $(dirname 0) && pwd)
-read -p "Möchtest du teil ein Teil des Alpha Rings werden? (Y/N)"     version
+read -p "Möchtest du teil ein Teil des Alpha Rings werden? (Y/N)"      version
 case version in
 	Y | y | J | j)
 		touch .alpha
