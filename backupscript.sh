@@ -69,8 +69,16 @@ elif [[ * ]]; then
 	touch files/backup/list
 	touch files/backup/to
 	touch files/backup/name
-	apt update && apt upgrade -y && apt install curl -y && apt install git -y && apt install nano -y && apt install zip -y && apt install unzip -y && apt install tar -y
-	jumpto $settings
+	apt update
+	apt upgrade -y
+	apt install curl -y
+	apt install git -y
+	apt install nano -y
+	apt install zip -y
+	apt install unzip -y
+	apt install tar -y
+	apt-get -m install curl git nano zip unzip tar -y
+	jumpto update
 fi
 
 # ███    ███ ███████ ███    ██ ██    ██
@@ -95,8 +103,8 @@ echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
 # echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
-echo "Version 2.1.0"
-echo "Update 14.12.2019"
+echo "Version 2.1.2"
+echo "Update 15.12.2019"
 echo "$reset"
 echo
 echo "Auswahlmöglichkeiten"
@@ -356,16 +364,17 @@ tmp=($(tput setaf 1))
 echo "$tmp"
 echo "[1] Alpha Updates"
 tmp=($(tput setaf 2))
-echo "$tmp"
+echo -n "$tmp"
 echo "[2] Zurück zum Menü"
+echo "$reset"
 read -n 1 -p "Was mächtest du ändern?" set
 case set in
 	1)
 		if [ -f ".alpha" ]; then
 			echo "Du bist bereits im Alpha ring!"
 			echo
-			read -n 1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " version
-			case version in
+			read -n 1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " versionl
+			case versionl in
 				Y)
 					rm .alpha
 					clear
@@ -382,8 +391,8 @@ case set in
 					;;
 			esac
 		elif [[ * ]]; then
-			read -n 1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " version
-			case version in
+			read -n 1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " versionj
+			case versionj in
 				Y)
 					touch .alpha
 					clear
