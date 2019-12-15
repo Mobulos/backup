@@ -133,45 +133,45 @@ read -t 0.1
 read -n 1 -p "Was willst du tun?: " befehl
 clear
 case $befehl in
-1)
-	jumpto backup
-	exit
-	;;
-1)
-	jumpto restore
-	exit
-	;;
-3)
-	jumpto delete
-	;;
-4)
-	clear
-	echo "Follgende Backups wurden erstellt: "
-	paste files/backup/name files/backup/list >temp
-	cat -n temp
-	rm temp
+	1)
+		jumpto backup
+		exit
+		;;
+	1)
+		jumpto restore
+		exit
+		;;
+	3)
+		jumpto delete
+		;;
+	4)
+		clear
+		echo "Follgende Backups wurden erstellt: "
+		paste files/backup/name files/backup/list >temp
+		cat -n temp
+		rm temp
 
-	read -n 1
-	jumpto menue
-	;;
-5)
-	rm 20*
-	clear
-	jumpto update
-	;;
-6)
-	jumpto settings
-	;;
-7)
-	clear
-	exit
-	;;
-*)
-	echo "Dieser Befehl existiert nicht!"
-	read -t 3 -n 1
-	jumpto menue
-	exit
-	;;
+		read -n 1
+		jumpto menue
+		;;
+	5)
+		rm 20*
+		clear
+		jumpto update
+		;;
+	6)
+		jumpto settings
+		;;
+	7)
+		clear
+		exit
+		;;
+	*)
+		echo "Dieser Befehl existiert nicht!"
+		read -t 3 -n 1
+		jumpto menue
+		exit
+		;;
 esac
 
 # ██████   █████   ██████ ██   ██ ██    ██ ██████
@@ -250,13 +250,13 @@ restore:
 clear
 read -p "WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N)"  warn
 case warn in
-Y)
-	(tar -xzf test.tar.gz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
-	clear
-	;;
-N)
-	echo "Es tut mir leid, doch ich darf das Backup nicht wiederherstellen, wenn Du mich die Daten nicht überschreiben lässt!"
-	;;
+	Y)
+		(tar -xzf test.tar.gz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
+		clear
+		;;
+	N)
+		echo "Es tut mir leid, doch ich darf das Backup nicht wiederherstellen, wenn Du mich die Daten nicht überschreiben lässt!"
+		;;
 esac
 
 # ██████  ███████ ██      ███████ ████████ ███████
@@ -277,13 +277,13 @@ read -p "Bitte gebe die Zahl von dem Backup ein " delup
 del=$(sed -ne "$delup"'p' files/backup/to)
 read -p "Der Ordner '$del' wird gelöscht! (Y/N) "  delyn
 case delyn in
-Y | y | J | j)
-	rm -r $del
-	;;
-*)
-	echo "Der Ordner wurde nicht gelöscht, du musst ihn ggf. selber Löschen!"
-	read -t 5
-	;;
+	Y | y | J | j)
+		rm -r $del
+		;;
+	*)
+		echo "Der Ordner wurde nicht gelöscht, du musst ihn ggf. selber Löschen!"
+		read -t 5
+		;;
 esac
 sed -i "$delup D" "files/backup/list"
 sed -i "$delup D" "files/backup/name"
@@ -343,15 +343,15 @@ clear
 dir=$(cd $(dirname 0) && pwd)
 read -p "Möchtest du teil ein Teil des Alpha Rings werden? (Y/N)"  version
 case version in
-Y | y | J | j)
-	touch .alpha
-	read -t 3 "Du Bist nun Teil des Alpha Rings."
-	;;
-*)
-	rm .alpha
-	clear
-	echo "Ab jetzt bist du kein Alpha Tester (mehr)."
-	;;
+	Y | y | J | j)
+		touch .alpha
+		read -t 3 "Du Bist nun Teil des Alpha Rings."
+		;;
+	*)
+		rm .alpha
+		clear
+		echo "Ab jetzt bist du kein Alpha Tester (mehr)."
+		;;
 esac
 rm files/dir
 touch files/dir
