@@ -95,7 +95,7 @@ echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
 # echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
-echo "Version 2.0.7"
+echo "Version 2.1.0"
 echo "Update 14.12.2019"
 echo "$reset"
 echo
@@ -339,20 +339,69 @@ fi
 # ███████ ███████    ██       ██    ██ ██   ████  ██████  ███████
 
 settings:
-clear
 dir=$(cd $(dirname 0) && pwd)
-read -p "Möchtest du teil ein Teil des Alpha Rings werden? (Y/N)" version
-case version in
-	Y | y | J | j)
-		touch .alpha
-		read -t 3 "Du Bist nun Teil des Alpha Rings."
-		;;
-	*)
-		rm .alpha
-		clear
-		echo "Ab jetzt bist du kein Alpha Tester (mehr)."
-		;;
-esac
+clear
+
+echo "######## #### ##    ##  ######  ######## ######## ##       ##       ##     ## ##    ##  ######   ######## ##    ##
+##        ##  ###   ## ##    ##    ##    ##       ##       ##       ##     ## ###   ## ##    ##  ##       ###   ##
+##        ##  ####  ## ##          ##    ##       ##       ##       ##     ## ####  ## ##        ##       ####  ##
+######    ##  ## ## ##  ######     ##    ######   ##       ##       ##     ## ## ## ## ##   #### ######   ## ## ##
+##        ##  ##  ####       ##    ##    ##       ##       ##       ##     ## ##  #### ##    ##  ##       ##  ####
+##        ##  ##   ### ##    ##    ##    ##       ##       ##       ##     ## ##   ### ##    ##  ##       ##   ###
+######## #### ##    ##  ######     ##    ######## ######## ########  #######  ##    ##  ######   ######## ##    ##"
+echo
+echo
+echo "Follgende Einnstellungen können geändert werden:"
+tmp=($(tput setaf 1))
+echo "$tmp"
+echo "[1] Alpha Updates"
+tmp=($(tput setaf 2))
+echo "$tmp"
+echo "[2] Zurück zum Menü"
+read -p -n 1 "Was mächtest du ändern?"
+if [ -f ".alpha" ]; then
+	echo "Du bist bereits im Alpha ring!"
+	echo
+	read -n 1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " version
+	case version in
+		Y)
+			rm .alpha
+			clear
+			echo "Du erhältst nun keine Test-Versionen mehr!"
+			read -t 3
+			jumpto update
+			exit
+			;;
+		N)
+			touch .alpha
+			echo "Du erhälstst weiterhin Alpha Updates."
+			read -t 3
+			jumpto update
+			;;
+	esac
+
+elif [[ * ]]; then
+	read -n 1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " version
+	case version in
+		Y)
+			touch .alpha
+			clear
+			echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
+			;;
+
+		N)
+			rm .alpha
+			clear
+			echo "Du erhältst nun keine Test-Versionen mehr!"
+			read -t 3
+			jumpto update
+			exit
+			;;
+	esac
+
+fi
+
+dir=$(cd $(dirname 0) && pwd)
 rm files/dir
 touch files/dir
 echo "$dir" >> files/dir
