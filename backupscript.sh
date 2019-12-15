@@ -258,7 +258,7 @@ exit
 restore:
 clear
 read -p "WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N)" warn
-case warn in
+case $warn in
 	Y)
 		(tar -xzf test.tar.gz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
 		clear
@@ -284,8 +284,8 @@ rm temp
 
 read -p "Bitte gebe die Zahl von dem Backup ein " delup
 del=$(sed -ne "$delup"'p' files/backup/to)
-read -p "Der Ordner '$del' wird gelöscht! (Y/N) "delyn
-case delyn in
+read -p "Der Ordner '$del' wird gelöscht! (Y/N) " delyn
+case $delyn in
 	Y | y | J | j)
 		rm -r $del
 		;;
@@ -351,31 +351,47 @@ settings:
 dir=$(cd $(dirname 0) && pwd)
 clear
 
-echo "######## #### ##    ##  ######  ######## ######## ##       ##       ##     ## ##    ##  ######   ######## ##    ##
-##        ##  ###   ## ##    ##    ##    ##       ##       ##       ##     ## ###   ## ##    ##  ##       ###   ##
-##        ##  ####  ## ##          ##    ##       ##       ##       ##     ## ####  ## ##        ##       ####  ##
-######    ##  ## ## ##  ######     ##    ######   ##       ##       ##     ## ## ## ## ##   #### ######   ## ## ##
-##        ##  ##  ####       ##    ##    ##       ##       ##       ##     ## ##  #### ##    ##  ##       ##  ####
-##        ##  ##   ### ##    ##    ##    ##       ##       ##       ##     ## ##   ### ##    ##  ##       ##   ###
-######## #### ##    ##  ######     ##    ######## ######## ########  #######  ##    ##  ######   ######## ##    ##"
-echo
-echo
-echo "Follgende Einnstellungen können geändert werden:"
 tmp=($(tput setaf 1))
-echo "$tmp"
-echo "[1] Alpha Updates"
+echo -n "$tmp"
+echo "######## #### ##    ##  ######  ######## ######## ##       ##       ##     ## ##    ##  ######   ######## ##    ##"
 tmp=($(tput setaf 2))
 echo -n "$tmp"
-echo "[2] Zurück zum Menü"
+read -t 0.5
+echo "##        ##  ###   ## ##    ##    ##    ##       ##       ##       ##     ## ###   ## ##    ##  ##       ###   ##"
+tmp=($(tput setaf 3))
+echo -n "$tmp"
+read -t 0.5
+tmp=($(tput setaf 4))
+echo -n "$tmp"
+read -t 0.5
+echo "######    ##  ## ## ##  ######     ##    ######   ##       ##       ##     ## ## ## ## ##   #### ######   ## ## ##"
+tmp=($(tput setaf 5))
+echo -n "$tmp"
+read -t 0.5
+echo "##        ##  ##   ### ##    ##    ##    ##       ##       ##       ##     ## ##   ### ##    ##  ##       ##   ###"
+tmp=($(tput setaf 6))
+echo -n "$tmp"
+read -t 0.5
+echo "##        ##  ##  ####       ##    ##    ##       ##       ##       ##     ## ##  #### ##    ##  ##       ##  ####"
+tmp=($(tput setaf 7))
+echo -n "$tmp"
+read -t 0.5
+echo "######## #### ##    ##  ######     ##    ######## ######## ########  #######  ##    ##  ######   ######## ##    ##"
+echo
+echo
 echo "$reset"
+read -t 0.5
+echo "Follgende Einnstellungen können geändert werden:"
+echo "[1] Alpha Updates"
+echo "[2] Zurück zum Menü"
 read -n 1 -p "Was mächtest du ändern?" set
-case set in
+case $set in
 	1)
 		if [ -f ".alpha" ]; then
 			echo "Du bist bereits im Alpha ring!"
 			echo
 			read -n 1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " versionl
-			case versionl in
+			case $versionl in
 				Y)
 					rm .alpha
 					clear
@@ -393,7 +409,7 @@ case set in
 			esac
 		elif [[ * ]]; then
 			read -n 1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " versionj
-			case versionj in
+			case $versionj in
 				Y)
 					touch .alpha
 					clear
