@@ -70,15 +70,22 @@ elif [[ * ]]; then
 	touch files/backup/list
 	touch files/backup/to
 	touch files/backup/name
-	apt update
-	apt upgrade -y
-	apt install curl -y
-	apt install git -y
-	apt install nano -y
-	apt install zip -y
-	apt install unzip -y
-	apt install tar -y
-	apt-get -m install curl git nano zip unzip tar -y
+	apt-get update
+	clear
+	apt-get upgrade -y
+	clear
+	apt-get install curl -y
+	clear0
+	apt-get install git -y
+	clear
+	apt-get install nano -y
+	clear
+	apt-get install zip -y
+	clear
+	apt-get install unzip -y
+	clear
+	apt-get install tar -y
+	clear
 	jumpto update
 fi
 
