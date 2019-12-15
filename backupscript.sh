@@ -155,7 +155,7 @@ case $befehl in
 		jumpto menue
 		;;
 	5)
-		rm 20*
+		rm $(date +%Y-%m-%d)
 		clear
 		jumpto update
 		;;
