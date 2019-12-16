@@ -64,12 +64,6 @@ clear
 if [[ -d "files" ]]; then
 	jumpto update
 elif [[ * ]]; then
-	mkdir files
-	mkdir files/backup
-	touch files/backup/name
-	touch files/backup/list
-	touch files/backup/to
-	touch files/backup/name
 	apt-get update
 	clear
 	apt-get upgrade -y
@@ -96,6 +90,12 @@ fi
 # ██      ██ ███████ ██   ████  ██████
 
 menue:
+mkdir files
+mkdir files/backup
+touch files/backup/name
+touch files/backup/list
+touch files/backup/to
+touch files/backup/name
 clear
 
 echo "
