@@ -28,7 +28,6 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-set -u
 
 function jumpto() {
 	label=$1
@@ -101,7 +100,8 @@ echo "
 ██   ██ ██   ██ ██      ██  ██  ██    ██ ██
 ██████  ██   ██  ██████ ██   ██  ██████  ██
 "
-
+set -u
+clear
 echo "$yellow########################################"
 echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
@@ -267,7 +267,7 @@ paste files/backup/name files/backup/list > temp
 cat -n temp
 rm temp
 echo
-read -p "Bitte gebe die Zahl des Backups ein: " resup
+read -n 1 -p "Bitte gebe die Zahl des Backups ein: " resup
 resto=$(sed -ne "$resup"'p' files/backup/to)
 reslist=$(sed -ne "$resup"'p' files/backup/list)
 resname=$(sed -ne "$resup"'p' files/backup/name)
