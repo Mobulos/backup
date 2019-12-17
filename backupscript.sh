@@ -271,10 +271,14 @@ read -p 'Bitte gebe die Zahl des Backups ein: ' resup
 resto=$(sed -ne "$resup"'p' files/backup/to)
 reslist=$(sed -ne "$resup"'p' files/backup/list)
 resname=$(sed -ne "$resup"'p' files/backup/name)
+echo -n "$red"
+echo "ACHTUNG: IN EINIGEN FÄLLEN WAR DAS ERSTELLEN DES BACKUPS FEHLERHAFT!"
+echo "				 üBERPRÜFE UNBEDING, OB DAS BACKUP ERFOLGREICH WAR(Die .tar Datei öffnen und auf vollständigkeit überprüfen)"
+echo "$reset"
 read -n 1 -p 'WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N): ' warn
 case $warn in
 	Y)
-		(tar -xzf $resname.tgz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
+		(tar -xzf $resto$resname.tgz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
 		clear
 		echo "Das Backup wurde wiederhergestellt!"
 		read -t 5 -n 1
