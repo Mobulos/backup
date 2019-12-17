@@ -69,10 +69,6 @@ elif [[ * ]]; then
 	apt-get upgrade -y
 	clear
 	apt-get install curl -y
-	clear0
-	apt-get install git -y
-	clear
-	apt-get install nano -y
 	clear
 	apt-get install zip -y
 	clear
@@ -111,7 +107,7 @@ echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
 # echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
-echo "Version 2.1.2"
+echo "Version 2.1.3"
 echo "Update 15.12.2019"
 echo "$reset"
 echo
@@ -253,7 +249,8 @@ echo "$bck" >> files/backup/list
 echo "$bckto" >> files/backup/to
 tar -cpz $bck | (pv -n > $bckto$nam.tgz) 2>&1 | dialog --gauge "Wallie erstellt ein Backup, ich wusste garnicht, dass das möglich ist......" 10 70 0
 clear
-echo "Das Backup wurde ertsellt."
+echo "Das Backup wurde ertsellt!"
+read -n 1
 exit
 
 # ██████  ███████ ███████ ████████  ██████  ██████  ███████
@@ -264,14 +261,33 @@ exit
 
 restore:
 clear
-read -p "WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N)" warn
+echo "Welche der folgenden Backups möchtest du wiederherstellen?"
+echo
+paste files/backup/name files/backup/list > temp
+cat -n temp
+rm temp
+echo
+read -p "Bitte gebe die Zahl des Backups ein: " resup
+resto=$(sed -ne "$resup"'p' files/backup/to)
+reslist=$(sed -ne "$resup"'p' files/backup/list)
+resname=$(sed -ne "$resup"'p' files/backup/name)
+read -p -n 1 "WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N): " warn
 case $warn in
 	Y)
-		(tar -xzf test.tar.gz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
+		(tar -xzf $resname.tgz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
 		clear
+		echo "Das Backup wurde wiederhergestellt!"
+		read -t 5 -n 1
+		clear
+		jumpto menue
 		;;
 	N)
-		echo "Es tut mir leid, doch ich darf das Backup nicht wiederherstellen, wenn Du mich die Daten nicht überschreiben lässt!"
+		echo -n "$red"
+		echo "Es tut mir leid, doch ich darf das Backup nicht wiederherstellen, wenn Du mich das Zielverzeichnis nicht überschreiben lässt!"
+		echo -n "$reset"
+		read -n 1
+		jumpto menue
+		exit
 		;;
 esac
 
@@ -284,29 +300,34 @@ esac
 delete:
 clear
 echo "Welche der folgenden Backups möchtest du löschen?"
-
+echo
 paste files/backup/name files/backup/list > temp
 cat -n temp
 rm temp
-
-read -p "Bitte gebe die Zahl von dem Backup ein " delup
-del=$(sed -ne "$delup"'p' files/backup/to)
-read -p "Der Ordner '$del' wird gelöscht! (Y/N) " delyn
+echo
+read -p "Bitte gebe die Zahl des Backups ein: " delup
+delto=$(sed -ne "$delup"'p' files/backup/to)
+delname=$(sed -ne "$delup"'p' files/backup/name)
+clear
+read -p "Soll Backup-Datei '$delto$delname.tgz' ebenfalls gelöscht werden?! (Y/N) [Empfohlen: (Y)] " delyn
 case $delyn in
 	Y | y | J | j)
-		rm -r $del
+		rm -r $delto$delname.tgz
+		sed -i "$delup D" "files/backup/list"
+		sed -i "$delup D" "files/backup/name"
+		sed -i "$delup D" "files/backup/to"
 		;;
 	*)
-		echo "Der Ordner wurde nicht gelöscht, du musst ihn ggf. selber Löschen!"
-		read -t 5
+		echo -n "$red"
+		echo "Der Ordner wurde nicht gelöscht, du musst dies ggf. selber Löschen!"
+		echo -n "$reset"
+		read -t 5 -n 1
 		;;
 esac
-sed -i "$delup D" "files/backup/list"
-sed -i "$delup D" "files/backup/name"
-sed -i "$delup D" "files/backup/to"
 clear
 echo "Das Backup wurde gelöscht!"
-read -t 3 -n 0
+read -t 3 -n 1
+jumpto menue
 exit
 
 # ██    ██ ██████  ██████   █████  ████████ ███████
