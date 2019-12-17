@@ -267,7 +267,7 @@ paste files/backup/name files/backup/list > temp
 cat -n temp
 rm temp
 echo
-read -n 1 -p "Bitte gebe die Zahl des Backups ein: " resup
+read -p "Bitte gebe die Zahl des Backups ein: " resup
 resto=$(sed -ne "$resup"'p' files/backup/to)
 reslist=$(sed -ne "$resup"'p' files/backup/list)
 resname=$(sed -ne "$resup"'p' files/backup/name)
