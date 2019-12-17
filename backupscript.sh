@@ -108,7 +108,7 @@ echo "########################################"
 # echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
 echo "Version 2.1.3"
-echo "Update 15.12.2019"
+echo "Update 17.12.2019"
 echo "$reset"
 echo
 echo "Auswahlmöglichkeiten"
