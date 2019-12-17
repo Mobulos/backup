@@ -267,11 +267,11 @@ paste files/backup/name files/backup/list > temp
 cat -n temp
 rm temp
 echo
-read -p "Bitte gebe die Zahl des Backups ein: " resup
+read -p 'Bitte gebe die Zahl des Backups ein: ' resup
 resto=$(sed -ne "$resup"'p' files/backup/to)
 reslist=$(sed -ne "$resup"'p' files/backup/list)
 resname=$(sed -ne "$resup"'p' files/backup/name)
-read -p -n 1 "WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N): " warn
+read -n 1 -p 'WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N): ' warn
 case $warn in
 	Y)
 		(tar -xzf $resname.tgz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
