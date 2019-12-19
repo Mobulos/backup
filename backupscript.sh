@@ -107,7 +107,7 @@ echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
 # echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
-echo "Version 2.1.5"
+echo "Version 2.1.6"
 echo "Update 19.12.2019" #TODO Datum und Version Updaten
 echo "$reset"
 echo
@@ -354,9 +354,6 @@ touch $(date +%Y-%m-%d)
 clear
 rm backupscript.sh
 if [ -f ".alpha" ]; then
-	echo "Die Alpha Version steht noch nicht zur verfügung!"
-	read -t 2
-	clear
 	echo "$red"
 	curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
 	echo "$reset"
@@ -365,8 +362,9 @@ if [ -f ".alpha" ]; then
 	./backupscript.sh
 	exit
 elif [[ * ]]; then
-	clear
-	curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
+	echo "$red"
+	curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/alpha/backupscript.sh --output backupscript.sh
+	echo "$reset"
 	read -t 1
 	chmod +x backupscript.sh
 	./backupscript.sh
