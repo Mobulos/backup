@@ -107,7 +107,7 @@ echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
 echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
-echo "Version 2.1.4"
+echo "Version 2.1.5"
 echo "Update 19.12.2019" #TODO
 echo "$reset"
 echo
@@ -381,6 +381,8 @@ fi
 
 settings:
 dir=$(cd $(dirname 0) && pwd)
+rm files/dir
+touch files/dir
 clear
 
 tmp=($(tput setaf 1))
@@ -430,14 +432,16 @@ case $set in
 			case $versionl in
 				Y)
 					rm .alpha
+					rm 20*
 					clear
 					echo "Du erhältst nun keine Test-Versionen mehr!"
-					read -t 3
+					read -t 3 -n 1
 					jumpto update
 					exit
 					;;
 				N)
 					touch .alpha
+					rm 20*
 					clear
 					echo "Du erhälstst weiterhin Alpha Updates."
 					read -t 3
@@ -456,18 +460,20 @@ case $set in
 			case $versionj in
 				Y)
 					touch .alpha
+					rm 20*
 					clear
 					echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
-					read -t 3
+					read -t 3 -n 1
 					jumpto update
 					exit
 					;;
 
 				N)
 					rm .alpha
+					rm 20*
 					clear
 					echo "Du erhältst weiterhin die offizielle Version!"
-					read -t 3
+					read -t 3 -n 1
 					jumpto update
 					exit
 					;;
@@ -492,13 +498,4 @@ case $set in
 		exit
 		;;
 esac
-
-dir=$(cd $(dirname 0) && pwd)
-rm files/dir
-touch files/dir
-echo "$dir" >> files/dir
-clear
-echo "Die einstellungen wurden erstellt..."
-read -t 3 -n 1
-jumpto update
 exit
