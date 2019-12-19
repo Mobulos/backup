@@ -171,6 +171,10 @@ case $befehl in
 		clear
 		echo "Follgende Backups wurden erstellt: "
 		paste files/backup/name files/backup/list > temp
+		echo
+		echo "Follgende Inkrementelle-Backups wurden erstellt: "
+		paste files/backupink/name files/backupink/list > temp
+
 		cat -n temp
 		rm temp
 
