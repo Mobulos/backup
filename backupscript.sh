@@ -110,7 +110,7 @@ echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
 echo "ACHTUNG|      Alpha Update      |ACHTUNG"
 echo
-echo "Version 2.2.1"
+echo "Version 2.2.2"
 echo "Update 19.12.2019" #TODO Version und Datum ändern
 echo "$reset"
 echo
@@ -149,7 +149,7 @@ echo -n "$tmp"
 echo "[8] Exit"
 echo "$reset"
 read -t 0.1
-read -n 1 -p "Was willst du tun?: " befehl
+read -n1 -p "Was willst du tun?: " befehl
 clear
 case $befehl in
 	1)
@@ -166,25 +166,17 @@ case $befehl in
 		;;
 	4)
 		jumpto delete
+		exit
 		;;
 	5)
-		clear
-		echo "Follgende Backups wurden erstellt: "
-		paste files/backup/name files/backup/list > temp
-		echo
-		echo "Follgende Inkrementelle-Backups wurden erstellt: "
-		paste files/backupink/name files/backupink/list > temp
-
-		cat -n temp
-		rm temp
-
-		read -n 1
-		jumpto menue
+		jumpto list
+		exit
 		;;
 	6)
-		rm $(date +%Y-%m-%d)
+		rm 20*
 		clear
 		jumpto update
+		exit
 		;;
 	7)
 		jumpto settings
@@ -200,6 +192,60 @@ case $befehl in
 		exit
 		;;
 esac
+
+# ██      ██ ███████ ████████
+# ██      ██ ██         ██
+# ██      ██ ███████    ██
+# ██      ██      ██    ██
+# ███████ ██ ███████    ██
+
+list:
+clear
+read -t 0.1
+tmp=($(tput setaf 1))
+echo -n "$tmp"
+echo "[1] Backups"
+read -t 0.1
+tmp=($(tput setaf 2))
+echo -n "$tmp"
+echo "[2] Inkrementelle-Backups"
+read -t 0.1
+tmp=($(tput setaf 3))
+echo -n "$tmp"
+echo "[3] Zurück zum Menü"
+echo -n "$reset"
+echo
+read -n1 -p "Welcher art von Backups möchtest du dir anzeigen lassen?" art
+case $art in
+	1)
+		clear
+		echo "Follgende Backups wurden erstellt: "
+		paste files/backup/name files/backup/list > temp
+		cat -n temp
+		rm temp
+		read -n1
+		jumpto list
+		;;
+	2)
+		clear
+		echo "Follgende Inkrementelle-Backups wurden erstellt: "
+		paste files/backupink/name files/backupink/list > temp
+		cat -n temp
+		rm temp
+		read -n1
+		jumpto list
+		;;
+	*)
+		clear
+		echo -n "$red"
+		echo "Befehl nicht gefunden!"
+		echo -n "$reset"
+		read -n1 -t 3
+		::
+		;;
+esac
+jumpto menue
+exit
 
 # ██████   █████   ██████ ██   ██ ██    ██ ██████
 # ██   ██ ██   ██ ██      ██  ██  ██    ██ ██   ██
@@ -266,7 +312,7 @@ tar -cpz $bck | (pv -n > $bckto$nam.tgz) 2>&1 | dialog --gauge "Wallie erstellt 
 # rsync -a --delete $bck $bckto/$nam
 clear
 echo "Das Backup wurde erstellt!"
-read -n 1
+read -n1
 exit
 
 # ██████   █████   ██████ ██   ██ ██    ██ ██████  ██ ███    ██ ██   ██
@@ -334,7 +380,7 @@ echo "$bckto" >> files/backupink/to
 rdiff-backup $bck $bckto
 clear
 echo "Das Backup wurde erstellt!"
-read -n 1
+read -n1
 exit
 
 # Backup machen
@@ -365,7 +411,7 @@ echo -n "$red"
 echo "ACHTUNG: IN EINIGEN FÄLLEN WAR DAS ERSTELLEN DES BACKUPS FEHLERHAFT!"
 echo "				 üBERPRÜFE UNBEDING, OB DAS BACKUP ERFOLGREICH WAR(Die .tar Datei öffnen und auf vollständigkeit überprüfen)"
 echo "$reset"
-read -n 1 -p 'WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N): ' warn
+read -n1 -p 'WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N): ' warn
 case $warn in
 	Y)
 		(tar -xzf $resto$resname.tgz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
@@ -379,7 +425,7 @@ case $warn in
 		echo -n "$red"
 		echo "Es tut mir leid, doch ich darf das Backup nicht wiederherstellen, wenn Du mich das Zielverzeichnis nicht überschreiben lässt!"
 		echo -n "$reset"
-		read -n 1
+		read -n1
 		jumpto menue
 		exit
 		;;
@@ -509,14 +555,14 @@ echo "[1] Alpha Updates"
 read -t 0.1
 echo "[2] Zurück zum Menü"
 read -t 0.1
-read -n 1 -p "Was mächtest du ändern?" set
+read -n1 -p "Was mächtest du ändern?" set
 case $set in
 	1)
 		if [ -f ".alpha" ]; then
 			clear
 			echo "Du bist bereits im Alpha ring!"
 			echo
-			read -n 1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " versionl
+			read -n1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " versionl
 			case $versionl in
 				Y)
 					rm .alpha
@@ -537,14 +583,14 @@ case $set in
 					;;
 				*)
 					clear
-					read -n 1 "Eingabe nicht erkannt"
+					read -n1 "Eingabe nicht erkannt"
 					jumpto settings
 					exit
 					;;
 			esac
 		elif [[ * ]]; then
 			clear
-			read -n 1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " versionj
+			read -n1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " versionj
 			case $versionj in
 				Y)
 					touch .alpha
@@ -567,7 +613,7 @@ case $set in
 					;;
 				*)
 					clear
-					read -n 1 "Eingabe nicht erkannt"
+					read -n1 "Eingabe nicht erkannt"
 					jumpto settings
 					exit
 					;;
@@ -581,7 +627,7 @@ case $set in
 		;;
 	*)
 		clear
-		read -n 1 "Eingabe nicht erkannt"
+		read -n1 "Eingabe nicht erkannt"
 		jumpto settings
 		exit
 		;;
