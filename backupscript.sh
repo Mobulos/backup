@@ -108,9 +108,9 @@ clear
 echo "$yellow########################################"
 echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
-echo "ACHTUNG| Alpha Update |ACHTUNG"
+echo "ACHTUNG|      Alpha Update      |ACHTUNG"
 echo
-echo "Version 2.2.0"
+echo "Version 2.2.1"
 echo "Update 19.12.2019" #TODO Version und Datum ändern
 echo "$reset"
 echo
@@ -132,7 +132,7 @@ tmp=($(tput setaf 1))
 echo -n "$tmp"
 echo "[4] Backup löschen"
 read -t 0.1
-tmp=($(tput setaf 3))
+tmp=($(tput setaf 2))
 echo -n "$tmp"
 echo "[5] Liste der Backups"
 read -t 0.1
