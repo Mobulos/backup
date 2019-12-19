@@ -90,7 +90,10 @@ mkdir files/backup
 touch files/backup/name
 touch files/backup/list
 touch files/backup/to
-touch files/backup/name
+mkdir files/backupink
+touch files/backupink/name
+touch files/backupink/list
+touch files/backupink/to
 clear
 
 echo "
@@ -107,39 +110,43 @@ echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
 echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
-echo "Version 2.1.6"
-echo "Update 19.12.2019" #TODO
+echo "Version 2.2.0"
+echo "Update 19.12.2019" #TODO Version und Datum ändern
 echo "$reset"
 echo
 echo "Auswahlmöglichkeiten"
 read -t 0.1
-tmp=($(tput setaf 1))
+tmp=($(tput setaf 3))
 echo "$tmp"
 echo "[1] Backup erstellen"
 read -t 0.1
-tmp=($(tput setaf 2))
-echo -n "$tmp"
-echo "[2] Backup wiederherstellen"
+tmp=($(tput setaf 3))
+echo "$tmp"
+echo "[2] Inkrementelles-Backup erstellen"
 read -t 0.1
 tmp=($(tput setaf 3))
 echo -n "$tmp"
-echo "[3] Backup löschen"
+echo "[3] Backup wiederherstellen"
 read -t 0.1
-tmp=($(tput setaf 4))
+tmp=($(tput setaf 1))
 echo -n "$tmp"
-echo "[4] Liste der Backups"
+echo "[4] Backup löschen"
 read -t 0.1
-tmp=($(tput setaf 5))
+tmp=($(tput setaf 3))
 echo -n "$tmp"
-echo "[5] Script Updaten"
+echo "[5] Liste der Backups"
 read -t 0.1
 tmp=($(tput setaf 6))
 echo -n "$tmp"
-echo "[6] Enstellungen Ändern"
+echo "[6] Script Updaten"
 read -t 0.1
-tmp=($(tput setaf 7))
+tmp=($(tput setaf 5))
 echo -n "$tmp"
-echo "[7] Exit"
+echo "[7] Enstellungen Ändern"
+read -t 0.1
+tmp=($(tput setaf 4))
+echo -n "$tmp"
+echo "[8] Exit"
 echo "$reset"
 read -t 0.1
 read -n 1 -p "Was willst du tun?: " befehl
@@ -149,14 +156,18 @@ case $befehl in
 		jumpto backup
 		exit
 		;;
-	2)
-		jumpto restore
+	1)
+		jumpto backupink
 		exit
 		;;
 	3)
-		jumpto delete
+		jumpto restore
+		exit
 		;;
 	4)
+		jumpto delete
+		;;
+	5)
 		clear
 		echo "Follgende Backups wurden erstellt: "
 		paste files/backup/name files/backup/list > temp
@@ -166,15 +177,15 @@ case $befehl in
 		read -n 1
 		jumpto menue
 		;;
-	5)
+	6)
 		rm $(date +%Y-%m-%d)
 		clear
 		jumpto update
 		;;
-	6)
+	7)
 		jumpto settings
 		;;
-	7)
+	8)
 		clear
 		exit
 		;;
@@ -248,10 +259,85 @@ echo "$nam" >> files/backup/name
 echo "$bck" >> files/backup/list
 echo "$bckto" >> files/backup/to
 tar -cpz $bck | (pv -n > $bckto$nam.tgz) 2>&1 | dialog --gauge "Wallie erstellt ein Backup, ich wusste garnicht, dass das möglich ist......" 10 70 0
+# rsync -a --delete $bck $bckto/$nam
 clear
 echo "Das Backup wurde ertsellt!"
 read -n 1
 exit
+
+# ██████   █████   ██████ ██   ██ ██    ██ ██████  ██ ███    ██ ██   ██
+# ██   ██ ██   ██ ██      ██  ██  ██    ██ ██   ██ ██ ████   ██ ██  ██
+# ██████  ███████ ██      █████   ██    ██ ██████  ██ ██ ██  ██ █████
+# ██   ██ ██   ██ ██      ██  ██  ██    ██ ██      ██ ██  ██ ██ ██  ██
+# ██████  ██   ██  ██████ ██   ██  ██████  ██      ██ ██   ████ ██   ██
+
+backupink:
+clear
+echo -n "$red"
+read -n1 "WARNUNG: Inkrementelle-Backpus können noch nicht wiederhergestellt werden!" # TODO: Wiederherstellen für ink Backups coden
+echo -n "$reset"
+clear
+echo "Folgende Inkrementelle-Backups exsistieren: "
+paste files/backupink/name files/backupink/list > temp
+cat -n temp
+rm temp
+
+echo
+echo
+bck=""
+bckto=""
+nam=""
+read -e -p "Von welchem Ordner soll ein Inkrementelles-Backup erstellt werden? " bck
+if [ -d "$bck" ]; then
+	echo
+elif [[ * ]]; then
+	echo "Dieser Ordner existiert nicht!"
+	jumpto backup
+fi
+
+clear
+echo "Wo soll das Backup gespeichert werden?"
+echo
+echo 'Bitte im folgenden Format angeben: "/pfad/zum/ordner/" '
+echo
+read -e -p 'Standardmäßig lautet der Pfad: "/root/backup/ink/" ' bckto
+
+if [ -z "$bckto" ]; then
+	bckto="/root/backup/ink/"
+elif [[ * ]]; then
+	echo
+fi
+
+clear
+if [ -d "$bckto" ]; then
+	echo
+elif [[ * ]]; then
+	for i in . .. ...; do
+		clear
+		echo "Dieser Ordner existiert nicht!"
+		echo "Daher wird er nun erstellt $i"
+		read -t 1
+	done
+	mkdir $bckto
+fi
+
+clear
+read -p "Gebe ein Namen für das Backup an: " nam
+clear
+echo "$nam" >> files/backupink/name
+echo "$bck" >> files/backupink/list
+echo "$bckto" >> files/backupink/to
+rdiff-backup $bck $bckto
+clear
+echo "Das Backup wurde ertsellt!"
+read -n 1
+exit
+
+# Backup machen
+# rdiff-backup /home/1-14-3/ /root/backup
+
+# backup list
+# rdiff-backup -l /root/backup
 
 # ██████  ███████ ███████ ████████  ██████  ██████  ███████
 # ██   ██ ██      ██         ██    ██    ██ ██   ██ ██
