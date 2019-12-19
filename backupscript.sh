@@ -108,7 +108,7 @@ echo "########################################"
 echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
 echo "Version 2.1.4"
-echo "Update 17.12.2019"
+echo "Update 19.12.2019" #TODO
 echo "$reset"
 echo
 echo "Auswahlmöglichkeiten"
@@ -405,7 +405,7 @@ tmp=($(tput setaf 6))
 echo -n "$tmp"
 read -t 0.1
 echo "##        ##  ##  ####       ##    ##    ##       ##       ##       ##     ## ##  #### ##    ##  ##       ##  ####"
-tmp=($(tput setaf 7))
+tmp=($(tput setaf 8))
 echo -n "$tmp"
 read -t 0.1
 echo "######## #### ##    ##  ######     ##    ######## ######## ########  #######  ##    ##  ######   ######## ##    ##"
@@ -443,8 +443,15 @@ case $set in
 					read -t 3
 					jumpto update
 					;;
+				*)
+					clear
+					read -n 1 "Eingabe nicht erkannt"
+					jumpto settings
+					exit
+					;;
 			esac
 		elif [[ * ]]; then
+			clear
 			read -n 1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " versionj
 			case $versionj in
 				Y)
@@ -464,7 +471,14 @@ case $set in
 					jumpto update
 					exit
 					;;
+				*)
+					clear
+					read -n 1 "Eingabe nicht erkannt"
+					jumpto settings
+					exit
+					;;
 			esac
+
 		fi
 		;;
 	2)
@@ -472,6 +486,7 @@ case $set in
 		exit
 		;;
 	*)
+		clear
 		read -n 1 "Eingabe nicht erkannt"
 		jumpto settings
 		exit
