@@ -156,7 +156,7 @@ case $befehl in
 		jumpto backup
 		exit
 		;;
-	1)
+	2)
 		jumpto backupink
 		exit
 		;;
