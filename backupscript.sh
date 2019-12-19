@@ -249,7 +249,7 @@ elif [[ * ]]; then
 		echo "Daher wird er nun erstellt $i"
 		read -t 1
 	done
-	mkdir $bckto
+	mkdir -p "$bckto"
 fi
 
 clear
@@ -318,7 +318,7 @@ elif [[ * ]]; then
 		echo "Daher wird er nun erstellt $i"
 		read -t 1
 	done
-	mkdir $bckto
+	mkdir -p "$bckto"
 fi
 
 clear
