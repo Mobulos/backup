@@ -121,7 +121,7 @@ echo "$tmp"
 echo "[1] Backup erstellen"
 read -t 0.1
 tmp=($(tput setaf 3))
-echo "$tmp"
+echo -n "$tmp"
 echo "[2] Inkrementelles-Backup erstellen"
 read -t 0.1
 tmp=($(tput setaf 3))
@@ -441,7 +441,7 @@ clear
 rm backupscript.sh
 if [ -f ".alpha" ]; then
 	echo "$red"
-	curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
+	curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/alpha/backupscript.sh --output backupscript.sh
 	echo "$reset"
 	read -t 1
 	chmod +x backupscript.sh
@@ -449,7 +449,7 @@ if [ -f ".alpha" ]; then
 	exit
 elif [[ * ]]; then
 	echo "$red"
-	curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/alpha/backupscript.sh --output backupscript.sh
+	curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
 	echo "$reset"
 	read -t 1
 	chmod +x backupscript.sh
