@@ -105,9 +105,9 @@ clear
 echo "$yellow########################################"
 echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
-# echo "ACHTUNG| Alpha Update |ACHTUNG"
+echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
-echo "Version 2.1.3"
+echo "Version 2.1.4"
 echo "Update 17.12.2019"
 echo "$reset"
 echo
@@ -222,7 +222,7 @@ read -e -p 'Standardmäßig lautet der Pfad: "/root/backup/" ' bckto
 
 if [ -z "$bckto" ]; then
 	bckto="/root/backup/"
-	mkdir /root/backup
+	mkdir -p "$bckto"
 	clear
 elif [[ * ]]; then
 	echo
@@ -234,11 +234,11 @@ if [ -d "$bckto" ]; then
 elif [[ * ]]; then
 	echo "Dieser Ordner existiert nicht!"
 	for i in . .. ...; do
+		clear
 		echo "Daher wird er nun erstellt $i"
 		read -t 1
 	done
 	mkdir $bckto
-	echo
 fi
 
 clear
@@ -388,38 +388,42 @@ echo -n "$tmp"
 echo "######## #### ##    ##  ######  ######## ######## ##       ##       ##     ## ##    ##  ######   ######## ##    ##"
 tmp=($(tput setaf 2))
 echo -n "$tmp"
-read -t 0.5
+read -t 0.1
 echo "##        ##  ###   ## ##    ##    ##    ##       ##       ##       ##     ## ###   ## ##    ##  ##       ###   ##"
 tmp=($(tput setaf 3))
 echo -n "$tmp"
-read -t 0.5
+read -t 0.1
 tmp=($(tput setaf 4))
 echo -n "$tmp"
-read -t 0.5
+read -t 0.1
 echo "######    ##  ## ## ##  ######     ##    ######   ##       ##       ##     ## ## ## ## ##   #### ######   ## ## ##"
 tmp=($(tput setaf 5))
 echo -n "$tmp"
-read -t 0.5
+read -t 0.1
 echo "##        ##  ##   ### ##    ##    ##    ##       ##       ##       ##     ## ##   ### ##    ##  ##       ##   ###"
 tmp=($(tput setaf 6))
 echo -n "$tmp"
-read -t 0.5
+read -t 0.1
 echo "##        ##  ##  ####       ##    ##    ##       ##       ##       ##     ## ##  #### ##    ##  ##       ##  ####"
 tmp=($(tput setaf 7))
 echo -n "$tmp"
-read -t 0.5
+read -t 0.1
 echo "######## #### ##    ##  ######     ##    ######## ######## ########  #######  ##    ##  ######   ######## ##    ##"
 echo
 echo
 echo "$reset"
-read -t 0.5
-echo "Follgende Einnstellungen können geändert werden:"
+read -t 0.1
+echo "Follgende Einstellungen können geändert werden:"
+read -t 0.1
 echo "[1] Alpha Updates"
+read -t 0.1
 echo "[2] Zurück zum Menü"
+read -t 0.1
 read -n 1 -p "Was mächtest du ändern?" set
 case $set in
 	1)
 		if [ -f ".alpha" ]; then
+			clear
 			echo "Du bist bereits im Alpha ring!"
 			echo
 			read -n 1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " versionl
@@ -434,6 +438,7 @@ case $set in
 					;;
 				N)
 					touch .alpha
+					clear
 					echo "Du erhälstst weiterhin Alpha Updates."
 					read -t 3
 					jumpto update
@@ -446,12 +451,15 @@ case $set in
 					touch .alpha
 					clear
 					echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
+					read -t 3
+					jumpto update
+					exit
 					;;
 
 				N)
 					rm .alpha
 					clear
-					echo "Du erhältst nun keine Test-Versionen mehr!"
+					echo "Du erhältst weiterhin die offizielle Version!"
 					read -t 3
 					jumpto update
 					exit
