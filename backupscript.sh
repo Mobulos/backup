@@ -105,10 +105,10 @@ clear
 echo "$yellow########################################"
 echo "######  BackUp Script by Mobulos  ######"
 echo "########################################"
-echo "ACHTUNG| Alpha Update |ACHTUNG"
+# echo "ACHTUNG| Alpha Update |ACHTUNG"
 echo
-echo "Version 2.1.4"
-echo "Update 19.12.2019" #TODO
+echo "Version 2.1.5"
+echo "Update 19.12.2019" #TODO Datum und Version Updaten
 echo "$reset"
 echo
 echo "Auswahlmöglichkeiten"
