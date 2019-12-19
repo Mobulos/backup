@@ -261,7 +261,7 @@ echo "$bckto" >> files/backup/to
 tar -cpz $bck | (pv -n > $bckto$nam.tgz) 2>&1 | dialog --gauge "Wallie erstellt ein Backup, ich wusste garnicht, dass das möglich ist......" 10 70 0
 # rsync -a --delete $bck $bckto/$nam
 clear
-echo "Das Backup wurde ertsellt!"
+echo "Das Backup wurde erstellt!"
 read -n 1
 exit
 
@@ -329,7 +329,7 @@ echo "$bck" >> files/backupink/list
 echo "$bckto" >> files/backupink/to
 rdiff-backup $bck $bckto
 clear
-echo "Das Backup wurde ertsellt!"
+echo "Das Backup wurde erstellt!"
 read -n 1
 exit
 
