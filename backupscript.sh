@@ -117,7 +117,7 @@ echo
 echo "Auswahlmöglichkeiten"
 read -t 0.1
 tmp=($(tput setaf 3))
-echo "$tmp"
+echo -n "$tmp"
 echo "[1] Backup erstellen"
 read -t 0.1
 tmp=($(tput setaf 3))
