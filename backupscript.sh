@@ -348,7 +348,9 @@ if [ -d "$bck" ]; then
 	echo
 elif [[ * ]]; then
 	echo "Dieser Ordner existiert nicht!"
-	jumpto backup
+	read -t 3
+	jumpto backupink
+	exit
 fi
 
 clear
@@ -358,8 +360,6 @@ read -e -p 'Standardmäßig lautet der Pfad: "/root/backup/ink/" ' bckto
 
 if [ -z "$bckto" ]; then
 	bckto="/root/backup/ink/"
-elif [[ * ]]; then
-	echo
 fi
 
 last="${bckto: -1}"
@@ -375,8 +375,7 @@ elif [[ * ]]; then
 	echo -n "$green"
 	for i in . .. ...; do
 		clear
-		echo "Dieser Ordner existiert nicht!"
-		echo "Daher wird er nun erstellt $i"
+		echo "Der Ordner wird nun erstellt $i"
 		read -t 1
 	done
 	echo -n "$reset"
@@ -388,7 +387,6 @@ echo "$nam" >> files/backupink/name
 echo "$bck" >> files/backupink/list
 echo "$bckto" >> files/backupink/to
 rdiff-backup $bck $bckto
-clear
 echo "Das Backup wurde erstellt!"
 exit
 
