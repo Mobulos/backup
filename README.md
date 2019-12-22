@@ -2,7 +2,7 @@
 
 ## Installation
 ```
-bash -c  "$(wget -qO- https://git.io/JeQoM)"
+bash -c  "$(wget -qO- https://git.io/JeddJ)"
 ```
 
 ## Unser Ziel
