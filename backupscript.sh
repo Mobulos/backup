@@ -365,17 +365,19 @@ last="${bckto: -1}"
 if [[ $last == "/" ]]; then
 	bckto="${bckto%?}"
 fi
-
+bckto=($bckto/$nam)
 clear
 if [ -d "$bckto" ]; then
 	echo
 elif [[ * ]]; then
+	echo -n "$green"
 	for i in . .. ...; do
 		clear
 		echo "Dieser Ordner existiert nicht!"
 		echo "Daher wird er nun erstellt $i"
 		read -t 1
 	done
+	echo -n "$reset"
 	mkdir -p "$bckto"
 fi
 
