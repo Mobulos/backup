@@ -90,7 +90,10 @@ mkdir files/backup
 touch files/backup/name
 touch files/backup/list
 touch files/backup/to
-touch files/backup/name
+# mkdir files/backupink
+# touch files/backupink/name
+# touch files/backupink/list
+# touch files/backupink/to
 clear
 
 echo "
@@ -103,73 +106,82 @@ echo "
 set -u
 clear
 echo "$yellow########################################"
+read -t 0.1
 echo "######  BackUp Script by Mobulos  ######"
+read -t 0.1
 echo "########################################"
-# echo "ACHTUNG| Alpha Update |ACHTUNG"
+read -t 0.1
+# echo "ACHTUNG|      Alpha Update      |ACHTUNG"
 echo
-echo "Version 2.1.6"
-echo "Update 19.12.2019" #TODO Datum und Version Updaten
+echo "Version 2.3.0"
+read -t 0.1
+echo "Update 22.12.2019" #TODO Version und Datum ändern
 echo "$reset"
 echo
+read -t 0.1
 echo "Auswahlmöglichkeiten"
-read -t 0.1
-tmp=($(tput setaf 1))
-echo "$tmp"
-echo "[1] Backup erstellen"
-read -t 0.1
-tmp=($(tput setaf 2))
-echo -n "$tmp"
-echo "[2] Backup wiederherstellen"
 read -t 0.1
 tmp=($(tput setaf 3))
 echo -n "$tmp"
+echo "[1] Backup erstellen"
+read -t 0.1
+# tmp=($(tput setaf 3))
+# echo -n "$tmp"
+# echo "[2] Inkrementelles-Backup erstellen"
+# read -t 0.1
+tmp=($(tput setaf 3))
+echo -n "$tmp"
+echo "[2] Backup wiederherstellen"
+read -t 0.1
+tmp=($(tput setaf 1))
+echo -n "$tmp"
 echo "[3] Backup löschen"
 read -t 0.1
-tmp=($(tput setaf 4))
+tmp=($(tput setaf 2))
 echo -n "$tmp"
 echo "[4] Liste der Backups"
 read -t 0.1
-tmp=($(tput setaf 5))
+tmp=($(tput setaf 6))
 echo -n "$tmp"
 echo "[5] Script Updaten"
 read -t 0.1
-tmp=($(tput setaf 6))
+tmp=($(tput setaf 5))
 echo -n "$tmp"
 echo "[6] Enstellungen Ändern"
 read -t 0.1
-tmp=($(tput setaf 7))
+tmp=($(tput setaf 4))
 echo -n "$tmp"
 echo "[7] Exit"
 echo "$reset"
 read -t 0.1
-read -n 1 -p "Was willst du tun?: " befehl
+read -n1 -p "Was willst du tun?: " befehl
 clear
 case $befehl in
 	1)
 		jumpto backup
 		exit
 		;;
+	# 2)
+	# 	jumpto backupink
+	# 	exit
+	# 	;;
 	2)
 		jumpto restore
 		exit
 		;;
 	3)
 		jumpto delete
+		exit
 		;;
 	4)
-		clear
-		echo "Follgende Backups wurden erstellt: "
-		paste files/backup/name files/backup/list > temp
-		cat -n temp
-		rm temp
-
-		read -n 1
-		jumpto menue
+		jumpto list
+		exit
 		;;
 	5)
-		rm $(date +%Y-%m-%d)
+		rm 20*
 		clear
 		jumpto update
+		exit
 		;;
 	6)
 		jumpto settings
@@ -185,6 +197,64 @@ case $befehl in
 		exit
 		;;
 esac
+
+# ██      ██ ███████ ████████
+# ██      ██ ██         ██
+# ██      ██ ███████    ██
+# ██      ██      ██    ██
+# ███████ ██ ███████    ██
+
+list:
+clear
+read -t 0.1
+tmp=($(tput setaf 1))
+echo -n "$tmp"
+echo "[1] Backups"
+read -t 0.1
+# tmp=($(tput setaf 2))
+# echo -n "$tmp"
+# echo "[2] Inkrementelle-Backups"
+# read -t 0.1
+tmp=($(tput setaf 3))
+echo -n "$tmp"
+echo "[2] Zurück zum Menü"
+echo -n "$reset"
+echo
+read -n1 -p "Welcher art von Backups möchtest du dir anzeigen lassen?" art
+case $art in
+	1)
+		clear
+		echo "Follgende Backups wurden erstellt: "
+		paste files/backup/name files/backup/list > temp
+		cat -n temp
+		rm temp
+		read -n1
+		jumpto list
+		;;
+	# 2)
+	# 	clear
+	# 	echo "Follgende Inkrementelle-Backups wurden erstellt: "
+	# 	paste files/backupink/name files/backupink/list > temp
+	# 	cat -n temp
+	# 	rm temp
+	# 	read -n1
+	# 	jumpto list
+	# 	;;
+	2)
+		clear
+		jumpto menue
+		;;
+	*)
+		clear
+		echo -n "$red"
+		echo "Befehl nicht gefunden!"
+		echo -n "$reset"
+		read -n1 -t 3
+		jumpto list
+		;;
+esac
+jumpto menue
+exit
 
 # ██████   █████   ██████ ██   ██ ██    ██ ██████
 # ██   ██ ██   ██ ██      ██  ██  ██    ██ ██   ██
@@ -232,13 +302,13 @@ clear
 if [ -d "$bckto" ]; then
 	echo
 elif [[ * ]]; then
-	echo "Dieser Ordner existiert nicht!"
 	for i in . .. ...; do
 		clear
+		echo "Dieser Ordner existiert nicht!"
 		echo "Daher wird er nun erstellt $i"
 		read -t 1
 	done
-	mkdir $bckto
+	mkdir -p "$bckto"
 fi
 
 clear
@@ -248,10 +318,87 @@ echo "$nam" >> files/backup/name
 echo "$bck" >> files/backup/list
 echo "$bckto" >> files/backup/to
 tar -cpz $bck | (pv -n > $bckto$nam.tgz) 2>&1 | dialog --gauge "Wallie erstellt ein Backup, ich wusste garnicht, dass das möglich ist......" 10 70 0
+# rsync -a --delete $bck $bckto/$nam
 clear
 echo "Das Backup wurde erstellt!"
-read -n 1
+read -n1
 exit
+
+# ██████   █████   ██████ ██   ██ ██    ██ ██████  ██ ███    ██ ██   ██
+# ██   ██ ██   ██ ██      ██  ██  ██    ██ ██   ██ ██ ████   ██ ██  ██
+# ██████  ███████ ██      █████   ██    ██ ██████  ██ ██ ██  ██ █████
+# ██   ██ ██   ██ ██      ██  ██  ██    ██ ██      ██ ██  ██ ██ ██  ██
+# ██████  ██   ██  ██████ ██   ██  ██████  ██      ██ ██   ████ ██   ██
+
+# backupink:
+# bck=""
+# bckto=""
+# nam=""
+# clear
+# echo -n "$red"
+# read -n1 -p "WARNUNG: Inkrementelle-Backpus können noch nicht wiederhergestellt werden!" # TODO: Wiederherstellen für ink Backups coden
+# echo -n "$reset"
+# clear
+# echo "Folgende Inkrementelle-Backups exsistieren: "
+# paste files/backupink/name files/backupink/list > temp
+# cat -n temp
+# rm temp
+# echo
+# echo
+# read -p "Gebe ein Namen für das Backup an: " nam
+# clear
+# read -e -p "Von welchem Ordner soll ein Inkrementelles-Backup erstellt werden? " bck
+# if [ -d "$bck" ]; then
+# 	echo
+# elif [[ * ]]; then
+# 	echo "Dieser Ordner existiert nicht!"
+# 	read -t 3
+# 	jumpto backupink
+# 	exit
+# fi
+#
+# clear
+# echo "Wo soll das Backup gespeichert werden?"
+# echo
+# read -e -p 'Standardmäßig lautet der Pfad: "/root/backup/ink/" ' bckto
+#
+# if [ -z "$bckto" ]; then
+# 	bckto="/root/backup/ink/"
+# fi
+#
+# last="${bckto: -1}"
+#
+# if [[ $last == "/" ]]; then
+# 	bckto="${bckto%?}"
+# fi
+# bckto=($bckto/$nam)
+# clear
+# if [ -d "$bckto" ]; then
+# 	echo
+# elif [[ * ]]; then
+# 	echo -n "$green"
+# 	for i in . .. ...; do
+# 		clear
+# 		echo "Der Ordner wird nun erstellt $i"
+# 		read -t 1
+# 	done
+# 	echo -n "$reset"
+# 	mkdir -p "$bckto"
+# fi
+#
+# clear
+# echo "$nam" >> files/backupink/name
+# echo "$bck" >> files/backupink/list
+# echo "$bckto" >> files/backupink/to
+# rdiff-backup $bck $bckto
+# echo "Das Backup wurde erstellt!"
+# exit
+#
+# Backup machen
+# rdiff-backup /home/1-14-3/ /root/backup
+
+# backup list
+# rdiff-backup -l /root/backup
 
 # ██████  ███████ ███████ ████████  ██████  ██████  ███████
 # ██   ██ ██      ██         ██    ██    ██ ██   ██ ██
@@ -275,9 +422,9 @@ echo -n "$red"
 echo "ACHTUNG: IN EINIGEN FÄLLEN WAR DAS ERSTELLEN DES BACKUPS FEHLERHAFT!"
 echo "				 üBERPRÜFE UNBEDING, OB DAS BACKUP ERFOLGREICH WAR(Die .tar Datei öffnen und auf vollständigkeit überprüfen)"
 echo "$reset"
-read -n 1 -p 'WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N): ' warn
+read -n1 -p 'WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N): ' warn
 case $warn in
-	Y)
+	Y | y | J | j)
 		(tar -xzf $resto$resname.tgz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
 		clear
 		echo "Das Backup wurde wiederhergestellt!"
@@ -285,11 +432,11 @@ case $warn in
 		clear
 		jumpto menue
 		;;
-	N)
+	N | n)
 		echo -n "$red"
 		echo "Es tut mir leid, doch ich darf das Backup nicht wiederherstellen, wenn Du mich das Zielverzeichnis nicht überschreiben lässt!"
 		echo -n "$reset"
-		read -n 1
+		read -n1
 		jumpto menue
 		exit
 		;;
@@ -309,11 +456,11 @@ paste files/backup/name files/backup/list > temp
 cat -n temp
 rm temp
 echo
-read -p "Bitte gebe die Zahl des Backups ein: " delup
+read -n1 -p "Bitte gebe die Zahl des Backups ein: " delup
 delto=$(sed -ne "$delup"'p' files/backup/to)
 delname=$(sed -ne "$delup"'p' files/backup/name)
 clear
-read -p "Soll Backup-Datei '$delto$delname.tgz' ebenfalls gelöscht werden?! (Y/N) [Empfohlen: (Y)] " delyn
+read -n1 -p "Soll die Backup-Datei '$delto$delname.tgz' ebenfalls gelöscht werden?! (Y/N) [Empfohlen: (Y)] " delyn
 case $delyn in
 	Y | y | J | j)
 		rm -r $delto$delname.tgz
@@ -346,12 +493,12 @@ if [ -f $(date +%Y-%m-%d) ]; then
 elif [[ * ]]; then
 	clear
 fi
-echo "$red Die neuste Version wird heruntergeladen"
-echo "$reset"
 read -t 2 -n 1
 rm 20*
 touch $(date +%Y-%m-%d)
 clear
+echo "$red Die neuste Version wird heruntergeladen"
+echo "$reset"
 rm backupscript.sh
 if [ -f ".alpha" ]; then
 	echo "$red"
@@ -379,6 +526,8 @@ fi
 
 settings:
 dir=$(cd $(dirname 0) && pwd)
+rm files/dir
+touch files/dir
 clear
 
 tmp=($(tput setaf 1))
@@ -417,61 +566,65 @@ echo "[1] Alpha Updates"
 read -t 0.1
 echo "[2] Zurück zum Menü"
 read -t 0.1
-read -n 1 -p "Was mächtest du ändern?" set
+read -n1 -p "Was möchtest du ändern?" set
 case $set in
 	1)
 		if [ -f ".alpha" ]; then
 			clear
 			echo "Du bist bereits im Alpha ring!"
 			echo
-			read -n 1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " versionl
+			read -n1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " versionl
 			case $versionl in
-				Y)
+				Y | y | J | j)
 					rm .alpha
+					rm 20*
 					clear
 					echo "Du erhältst nun keine Test-Versionen mehr!"
-					read -t 3
+					read -t 3 -n 1
 					jumpto update
 					exit
 					;;
-				N)
+				N | n)
 					touch .alpha
+					rm 20*
 					clear
 					echo "Du erhälstst weiterhin Alpha Updates."
 					read -t 3
 					jumpto update
+					exit
 					;;
 				*)
 					clear
-					read -n 1 "Eingabe nicht erkannt"
+					read -n1 "Eingabe nicht erkannt"
 					jumpto settings
 					exit
 					;;
 			esac
 		elif [[ * ]]; then
 			clear
-			read -n 1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " versionj
+			read -n1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " versionj
 			case $versionj in
-				Y)
+				Y | y | j | J)
 					touch .alpha
+					rm 20*
 					clear
 					echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
-					read -t 3
+					read -t 3 -n 1
 					jumpto update
 					exit
 					;;
-
-				N)
+				N | n)
 					rm .alpha
+					rm 20*
 					clear
 					echo "Du erhältst weiterhin die offizielle Version!"
-					read -t 3
+					read -t 3 -n 1
 					jumpto update
 					exit
 					;;
 				*)
 					clear
-					read -n 1 "Eingabe nicht erkannt"
+					read -n1 "Eingabe nicht erkannt"
 					jumpto settings
 					exit
 					;;
@@ -485,18 +638,9 @@ case $set in
 		;;
 	*)
 		clear
-		read -n 1 "Eingabe nicht erkannt"
+		read -n1 "Eingabe nicht erkannt"
 		jumpto settings
 		exit
 		;;
 esac
-
-dir=$(cd $(dirname 0) && pwd)
-rm files/dir
-touch files/dir
-echo "$dir" >> files/dir
-clear
-echo "Die einstellungen wurden erstellt..."
-read -t 3 -n 1
-jumpto update
 exit
