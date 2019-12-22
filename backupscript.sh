@@ -571,7 +571,7 @@ case $set in
 			echo
 			read -n1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " versionl
 			case $versionl in
-				Y)
+				Y | y | J | j)
 					rm .alpha
 					rm 20*
 					clear
@@ -580,7 +580,7 @@ case $set in
 					jumpto update
 					exit
 					;;
-				N)
+				N | n)
 					touch .alpha
 					rm 20*
 					clear
