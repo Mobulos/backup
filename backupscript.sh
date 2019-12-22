@@ -240,13 +240,17 @@ case $art in
 		read -n1
 		jumpto list
 		;;
+	3)
+		clear
+		jumpto menue
+		;;
 	*)
 		clear
 		echo -n "$red"
 		echo "Befehl nicht gefunden!"
 		echo -n "$reset"
 		read -n1 -t 3
-		::
+		jumpto list
 		;;
 esac
 jumpto menue
