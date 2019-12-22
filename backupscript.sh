@@ -106,14 +106,19 @@ echo "
 set -u
 clear
 echo "$yellow########################################"
+read -t 0.1
 echo "######  BackUp Script by Mobulos  ######"
+read -t 0.1
 echo "########################################"
+read -t 0.1
 echo "ACHTUNG|      Alpha Update      |ACHTUNG"
 echo
-echo "Version 2.2.2"
-echo "Update 19.12.2019" #TODO Version und Datum ändern
+echo "Version 2.2.3"
+read -t 0.1
+echo "Update 22.12.2019" #TODO Version und Datum ändern
 echo "$reset"
 echo
+read -t 0.1
 echo "Auswahlmöglichkeiten"
 read -t 0.1
 tmp=($(tput setaf 3))
@@ -331,7 +336,6 @@ echo "Folgende Inkrementelle-Backups exsistieren: "
 paste files/backupink/name files/backupink/list > temp
 cat -n temp
 rm temp
-
 echo
 echo
 bck=""
@@ -348,14 +352,18 @@ fi
 clear
 echo "Wo soll das Backup gespeichert werden?"
 echo
-echo 'Bitte im folgenden Format angeben: "/pfad/zum/ordner/" '
-echo
 read -e -p 'Standardmäßig lautet der Pfad: "/root/backup/ink/" ' bckto
 
 if [ -z "$bckto" ]; then
 	bckto="/root/backup/ink/"
 elif [[ * ]]; then
 	echo
+fi
+
+last="${bckto: -1}"
+
+if [[ $last == "/" ]]; then
+	bckto="${bckto%?}"
 fi
 
 clear
@@ -380,7 +388,6 @@ echo "$bckto" >> files/backupink/to
 rdiff-backup $bck $bckto
 clear
 echo "Das Backup wurde erstellt!"
-read -n1
 exit
 
 # Backup machen
@@ -580,6 +587,7 @@ case $set in
 					echo "Du erhälstst weiterhin Alpha Updates."
 					read -t 3
 					jumpto update
+					exit
 					;;
 				*)
 					clear
