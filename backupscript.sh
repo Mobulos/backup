@@ -327,10 +327,14 @@ exit
 # ██████  ██   ██  ██████ ██   ██  ██████  ██      ██ ██   ████ ██   ██
 
 backupink:
+bck=""
+bckto=""
+nam=""
 clear
 echo -n "$red"
-read -n1 "WARNUNG: Inkrementelle-Backpus können noch nicht wiederhergestellt werden!" # TODO: Wiederherstellen für ink Backups coden
+read "WARNUNG: Inkrementelle-Backpus können noch nicht wiederhergestellt werden!" # TODO: Wiederherstellen für ink Backups coden
 echo -n "$reset"
+read -n1
 clear
 echo "Folgende Inkrementelle-Backups exsistieren: "
 paste files/backupink/name files/backupink/list > temp
@@ -338,9 +342,8 @@ cat -n temp
 rm temp
 echo
 echo
-bck=""
-bckto=""
-nam=""
+read -p "Gebe ein Namen für das Backup an: " nam
+clear
 read -e -p "Von welchem Ordner soll ein Inkrementelles-Backup erstellt werden? " bck
 if [ -d "$bck" ]; then
 	echo
