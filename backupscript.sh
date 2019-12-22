@@ -600,7 +600,7 @@ case $set in
 			clear
 			read -n1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " versionj
 			case $versionj in
-				Y)
+				Y | y | j | J)
 					touch .alpha
 					rm 20*
 					clear
@@ -609,8 +609,7 @@ case $set in
 					jumpto update
 					exit
 					;;
-
-				N)
+				N | n)
 					rm .alpha
 					rm 20*
 					clear
