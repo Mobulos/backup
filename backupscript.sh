@@ -298,9 +298,9 @@ clear
 if [ -d "$bckto" ]; then
 	echo
 elif [[ * ]]; then
-	echo "Dieser Ordner existiert nicht!"
 	for i in . .. ...; do
 		clear
+		echo "Dieser Ordner existiert nicht!"
 		echo "Daher wird er nun erstellt $i"
 		read -t 1
 	done
@@ -420,7 +420,7 @@ echo "				 üBERPRÜFE UNBEDING, OB DAS BACKUP ERFOLGREICH WAR(Die .tar Datei ö
 echo "$reset"
 read -n1 -p 'WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N): ' warn
 case $warn in
-	Y)
+	Y | y | J | j)
 		(tar -xzf $resto$resname.tgz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
 		clear
 		echo "Das Backup wurde wiederhergestellt!"
@@ -428,7 +428,7 @@ case $warn in
 		clear
 		jumpto menue
 		;;
-	N)
+	N | n)
 		echo -n "$red"
 		echo "Es tut mir leid, doch ich darf das Backup nicht wiederherstellen, wenn Du mich das Zielverzeichnis nicht überschreiben lässt!"
 		echo -n "$reset"
@@ -452,11 +452,11 @@ paste files/backup/name files/backup/list > temp
 cat -n temp
 rm temp
 echo
-read -p "Bitte gebe die Zahl des Backups ein: " delup
+read -n1 -p "Bitte gebe die Zahl des Backups ein: " delup
 delto=$(sed -ne "$delup"'p' files/backup/to)
 delname=$(sed -ne "$delup"'p' files/backup/name)
 clear
-read -p "Soll Backup-Datei '$delto$delname.tgz' ebenfalls gelöscht werden?! (Y/N) [Empfohlen: (Y)] " delyn
+read -n1 -p "Soll Backup-Datei '$delto$delname.tgz' ebenfalls gelöscht werden?! (Y/N) [Empfohlen: (Y)] " delyn
 case $delyn in
 	Y | y | J | j)
 		rm -r $delto$delname.tgz
@@ -489,12 +489,12 @@ if [ -f $(date +%Y-%m-%d) ]; then
 elif [[ * ]]; then
 	clear
 fi
-echo "$red Die neuste Version wird heruntergeladen"
-echo "$reset"
 read -t 2 -n 1
 rm 20*
 touch $(date +%Y-%m-%d)
 clear
+echo "$red Die neuste Version wird heruntergeladen"
+echo "$reset"
 rm backupscript.sh
 if [ -f ".alpha" ]; then
 	echo "$red"
