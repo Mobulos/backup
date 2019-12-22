@@ -332,9 +332,8 @@ bckto=""
 nam=""
 clear
 echo -n "$red"
-read "WARNUNG: Inkrementelle-Backpus können noch nicht wiederhergestellt werden!" # TODO: Wiederherstellen für ink Backups coden
+read -n1 -p "WARNUNG: Inkrementelle-Backpus können noch nicht wiederhergestellt werden!" # TODO: Wiederherstellen für ink Backups coden
 echo -n "$reset"
-read -n1
 clear
 echo "Folgende Inkrementelle-Backups exsistieren: "
 paste files/backupink/name files/backupink/list > temp
@@ -384,8 +383,6 @@ elif [[ * ]]; then
 	mkdir -p "$bckto"
 fi
 
-clear
-read -p "Gebe ein Namen für das Backup an: " nam
 clear
 echo "$nam" >> files/backupink/name
 echo "$bck" >> files/backupink/list
