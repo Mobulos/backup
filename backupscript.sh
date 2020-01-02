@@ -551,14 +551,14 @@ echo "##        ##  ##   ### ##    ##    ##    ##       ##       ##       ##    
 tmp=($(tput setaf 6))
 echo -n "$tmp"
 read -t 0.1
-echo "##        ##  ##    ##   ##    ##    ##    ##       ##       ##       ##     ## ##  #### ##    ##  ##       ##  ####"
+echo "##        ##  ##    ## ##    ##    ##    ##       ##       ##       ##     ## ##  #### ##    ##  ##       ##  ####"
 tmp=($(tput setaf 8))
 echo -n "$tmp"
 read -t 0.1
 echo "######## #### ##    ##   #####     ##    ######## ######## ########  #######  ##    ##  ######   ######## ##    ##"
 echo
 echo
-echo "$reset"
+echo "$green"
 read -t 0.1
 echo "Follgende Einstellungen können geändert werden:"
 read -t 0.1
@@ -567,6 +567,7 @@ read -t 0.1
 echo "[2] Zurück zum Menü"
 read -t 0.1
 read -n1 -p "Was mächtest du ändern?" set
+echo -n "$reset"
 case $set in
 	1)
 		if [ -f ".alpha" ]; then
