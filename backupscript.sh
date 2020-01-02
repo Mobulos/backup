@@ -113,9 +113,9 @@ echo "########################################"
 read -t 0.1
 echo "ACHTUNG|      Alpha Update      |ACHTUNG"
 echo
-echo "Version 2.2.3"
+echo "Version 2.2.4"
 read -t 0.1
-echo "Update 22.12.2019" #TODO Version und Datum ändern
+echo "Update 2.1.2020" #TODO Version und Datum ändern
 echo "$reset"
 echo
 read -t 0.1
@@ -551,11 +551,11 @@ echo "##        ##  ##   ### ##    ##    ##    ##       ##       ##       ##    
 tmp=($(tput setaf 6))
 echo -n "$tmp"
 read -t 0.1
-echo "##        ##  ##  ####       ##    ##    ##       ##       ##       ##     ## ##  #### ##    ##  ##       ##  ####"
+echo "##        ##  ##    ##   ##    ##    ##    ##       ##       ##       ##     ## ##  #### ##    ##  ##       ##  ####"
 tmp=($(tput setaf 8))
 echo -n "$tmp"
 read -t 0.1
-echo "######## #### ##    ##  ######     ##    ######## ######## ########  #######  ##    ##  ######   ######## ##    ##"
+echo "######## #### ##    ##   #####     ##    ######## ######## ########  #######  ##    ##  ######   ######## ##    ##"
 echo
 echo
 echo "$reset"
