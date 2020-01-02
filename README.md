@@ -5,6 +5,13 @@
 bash -c  "$(wget -qO- https://git.io/JeddJ)"
 ```
 
+| Version | Supported          |
+| ------- | ------------------ |
+| 2.x.x   | :white_check_mark: |
+| 1.x.x   | :x: |
+| 0.x.x   | :x:                |
+
+
 ## Unser Ziel
 Das Script soll leicht zu bedienen sein.
 Es sollte für jegliche Art von Anwendern geeignet sein.
