@@ -90,10 +90,6 @@ mkdir files/backup
 touch files/backup/name
 touch files/backup/list
 touch files/backup/to
-mkdir files/backupink
-touch files/backupink/name
-touch files/backupink/list
-touch files/backupink/to
 clear
 
 echo "
@@ -113,9 +109,9 @@ echo "########################################"
 read -t 0.1
 echo "ACHTUNG|      Alpha Update      |ACHTUNG"
 echo
-echo "Version 2.2.4"
+echo "Version 2.2.9"
 read -t 0.1
-echo "Update 2.1.2020" #TODO Version und Datum ändern
+echo "Update 6.1.2020" #TODO Version und Datum ändern
 echo "$reset"
 echo
 read -t 0.1
@@ -127,31 +123,27 @@ echo "[1] Backup erstellen"
 read -t 0.1
 tmp=($(tput setaf 3))
 echo -n "$tmp"
-echo "[2] Inkrementelles-Backup erstellen"
-read -t 0.1
-tmp=($(tput setaf 3))
-echo -n "$tmp"
-echo "[3] Backup wiederherstellen"
+echo "[2] Backup wiederherstellen"
 read -t 0.1
 tmp=($(tput setaf 1))
 echo -n "$tmp"
-echo "[4] Backup löschen"
+echo "[3] Backup löschen"
 read -t 0.1
 tmp=($(tput setaf 2))
 echo -n "$tmp"
-echo "[5] Liste der Backups"
+echo "[4] Liste der Backups"
 read -t 0.1
 tmp=($(tput setaf 6))
 echo -n "$tmp"
-echo "[6] Script Updaten"
+echo "[5] Script Updaten"
 read -t 0.1
 tmp=($(tput setaf 5))
 echo -n "$tmp"
-echo "[7] Enstellungen Ändern"
+echo "[6] Enstellungen Ändern"
 read -t 0.1
 tmp=($(tput setaf 4))
 echo -n "$tmp"
-echo "[8] Exit"
+echo "[7] Exit"
 echo "$reset"
 read -t 0.1
 read -n1 -p "Was willst du tun?: " befehl
@@ -162,31 +154,27 @@ case $befehl in
 		exit
 		;;
 	2)
-		jumpto backupink
-		exit
-		;;
-	3)
 		jumpto restore
 		exit
 		;;
-	4)
+	3)
 		jumpto delete
 		exit
 		;;
-	5)
+	4)
 		jumpto list
 		exit
 		;;
-	6)
+	5)
 		rm 20*
 		clear
 		jumpto update
 		exit
 		;;
-	7)
+	6)
 		jumpto settings
 		;;
-	8)
+	7)
 		clear
 		exit
 		;;
@@ -206,54 +194,12 @@ esac
 
 list:
 clear
-read -t 0.1
-tmp=($(tput setaf 1))
-echo -n "$tmp"
-echo "[1] Backups"
-read -t 0.1
-tmp=($(tput setaf 2))
-echo -n "$tmp"
-echo "[2] Inkrementelle-Backups"
-read -t 0.1
-tmp=($(tput setaf 3))
-echo -n "$tmp"
-echo "[3] Zurück zum Menü"
-echo -n "$reset"
-echo
-read -n1 -p "Welcher art von Backups möchtest du dir anzeigen lassen?" art
-case $art in
-	1)
-		clear
-		echo "Follgende Backups wurden erstellt: "
-		paste files/backup/name files/backup/list > temp
-		cat -n temp
-		rm temp
-		read -n1
-		jumpto list
-		;;
-	2)
-		clear
-		echo "Follgende Inkrementelle-Backups wurden erstellt: "
-		paste files/backupink/name files/backupink/list > temp
-		cat -n temp
-		rm temp
-		read -n1
-		jumpto list
-		;;
-	3)
-		clear
-		jumpto menue
-		;;
-	*)
-		clear
-		echo -n "$red"
-		echo "Befehl nicht gefunden!"
-		echo -n "$reset"
-		read -n1 -t 3
-		jumpto list
-		;;
-esac
-jumpto menue
+echo "Follgende Backups wurden erstellt: "
+paste files/backup/name files/backup/list > temp
+cat -n temp
+rm temp
+read -n1
+jumpto list
 exit
 
 # ██████   █████   ██████ ██   ██ ██    ██ ██████
@@ -324,81 +270,6 @@ echo "Das Backup wurde erstellt!"
 read -n1
 exit
 
-# ██████   █████   ██████ ██   ██ ██    ██ ██████  ██ ███    ██ ██   ██
-# ██   ██ ██   ██ ██      ██  ██  ██    ██ ██   ██ ██ ████   ██ ██  ██
-# ██████  ███████ ██      █████   ██    ██ ██████  ██ ██ ██  ██ █████
-# ██   ██ ██   ██ ██      ██  ██  ██    ██ ██      ██ ██  ██ ██ ██  ██
-# ██████  ██   ██  ██████ ██   ██  ██████  ██      ██ ██   ████ ██   ██
-
-backupink:
-bck=""
-bckto=""
-nam=""
-clear
-echo -n "$red"
-read -n1 -p "WARNUNG: Inkrementelle-Backpus können noch nicht wiederhergestellt werden!" # TODO: Wiederherstellen für ink Backups coden
-echo -n "$reset"
-clear
-echo "Folgende Inkrementelle-Backups exsistieren: "
-paste files/backupink/name files/backupink/list > temp
-cat -n temp
-rm temp
-echo
-echo
-read -p "Gebe ein Namen für das Backup an: " nam
-clear
-read -e -p "Von welchem Ordner soll ein Inkrementelles-Backup erstellt werden? " bck
-if [ -d "$bck" ]; then
-	echo
-elif [[ * ]]; then
-	echo "Dieser Ordner existiert nicht!"
-	read -t 3
-	jumpto backupink
-	exit
-fi
-
-clear
-echo "Wo soll das Backup gespeichert werden?"
-echo
-read -e -p 'Standardmäßig lautet der Pfad: "/root/backup/ink/" ' bckto
-
-if [ -z "$bckto" ]; then
-	bckto="/root/backup/ink/"
-fi
-
-last="${bckto: -1}"
-
-if [[ $last == "/" ]]; then
-	bckto="${bckto%?}"
-fi
-bckto=($bckto/$nam)
-clear
-if [ -d "$bckto" ]; then
-	echo
-elif [[ * ]]; then
-	echo -n "$green"
-	for i in . .. ...; do
-		clear
-		echo "Der Ordner wird nun erstellt $i"
-		read -t 1
-	done
-	echo -n "$reset"
-	mkdir -p "$bckto"
-fi
-
-clear
-echo "$nam" >> files/backupink/name
-echo "$bck" >> files/backupink/list
-echo "$bckto" >> files/backupink/to
-rdiff-backup $bck $bckto
-echo "Das Backup wurde erstellt!"
-exit
-
-# Backup machen
-# rdiff-backup /home/1-14-3/ /root/backup
-
-# backup list
-# rdiff-backup -l /root/backup
 
 # ██████  ███████ ███████ ████████  ██████  ██████  ███████
 # ██   ██ ██      ██         ██    ██    ██ ██   ██ ██
