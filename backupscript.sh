@@ -107,10 +107,9 @@ echo "######  BackUp Script by Mobulos  ######"
 read -t 0.1
 echo "########################################"
 read -t 0.1
-echo "ACHTUNG|      Alpha Update      |ACHTUNG"
+# echo "ACHTUNG|      Alpha Update      |ACHTUNG"
 echo
-echo "Version 2.2.9"
-read -t 0.1
+echo "Version 2.3.0"
 echo "Update 6.1.2020" #TODO Version und Datum ändern
 echo "$reset"
 echo
