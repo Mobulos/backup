@@ -152,6 +152,10 @@ case $befehl in
 		jumpto backup
 		exit
 		;;
+	# 2)
+	# 	jumpto backupink
+	# 	exit
+	# 	;;
 	2)
 		jumpto restore
 		exit
