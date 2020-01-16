@@ -30,10 +30,10 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 function jumpto() {
-	label=$1
-	cmd=$(sed -n "/$label:/{:a;n;p;ba};" $0 | grep -v ':$')
-	eval "$cmd"
-	exit
+  label=$1
+  cmd=$(sed -n "/$label:/{:a;n;p;ba};" $0 | grep -v ':$')
+  eval "$cmd"
+  exit
 }
 
 menue=${1:-"menue"}
@@ -45,8 +45,8 @@ restore=${5:-"restore"}
 FILE="/tmp/out.$$"
 GREP="/bin/grep"
 if [ "$(id -u)" != "0" ]; then
-	echo "Das Script muss als root gestartet werden." 1>&2
-	exit 1
+  echo "Das Script muss als root gestartet werden." 1>&2
+  exit 1
 fi
 
 # farbcodes:
@@ -61,21 +61,21 @@ reset=($(tput sgr0))
 clear
 
 if [[ -d "files" ]]; then
-	jumpto update
+  jumpto update
 elif [[ * ]]; then
-	apt-get update
-	clear
-	apt-get upgrade -y
-	clear
-	apt-get install curl -y
-	clear
-	apt-get install zip -y
-	clear
-	apt-get install unzip -y
-	clear
-	apt-get install tar -y
-	clear
-	jumpto update
+  apt-get update
+  clear
+  apt-get upgrade -y
+  clear
+  apt-get install curl -y
+  clear
+  apt-get install zip -y
+  clear
+  apt-get install unzip -y
+  clear
+  apt-get install tar -y
+  clear
+  jumpto update
 fi
 
 # ███    ███ ███████ ███    ██ ██    ██
@@ -148,45 +148,45 @@ read -t 0.1
 read -n1 -p "Was willst du tun?: " befehl
 clear
 case $befehl in
-	1)
-		jumpto backup
-		exit
-		;;
-	# 2)
-	# 	jumpto backupink
-	# 	exit
-	# 	;;
-	2)
-		jumpto restore
-		exit
-		;;
-	3)
-		jumpto delete
-		exit
-		;;
-	4)
-		jumpto list
-		exit
-		;;
-	5)
-		rm 20*
-		clear
-		jumpto update
-		exit
-		;;
-	6)
-		jumpto settings
-		;;
-	7)
-		clear
-		exit
-		;;
-	*)
-		echo "Dieser Befehl existiert nicht!"
-		read -t 3 -n 1
-		jumpto menue
-		exit
-		;;
+1)
+  jumpto backup
+  exit
+  ;;
+# 2)
+# 	jumpto backupink
+# 	exit
+# 	;;
+2)
+  jumpto restore
+  exit
+  ;;
+3)
+  jumpto delete
+  exit
+  ;;
+4)
+  jumpto list
+  exit
+  ;;
+5)
+  rm 20*
+  clear
+  jumpto update
+  exit
+  ;;
+6)
+  jumpto settings
+  ;;
+7)
+  clear
+  exit
+  ;;
+*)
+  echo "Dieser Befehl existiert nicht!"
+  read -t 3 -n 1
+  jumpto menue
+  exit
+  ;;
 esac
 
 # ██      ██ ███████ ████████
@@ -198,7 +198,7 @@ esac
 list:
 clear
 echo "Follgende Backups wurden erstellt: "
-paste files/backup/name files/backup/list > temp
+paste files/backup/name files/backup/list >temp
 cat -n temp
 rm temp
 read -n1
@@ -215,7 +215,7 @@ backup:
 clear
 echo "Folgende Backups exsistieren: "
 
-paste files/backup/name files/backup/list > temp
+paste files/backup/name files/backup/list >temp
 cat -n temp
 rm temp
 
@@ -226,10 +226,10 @@ bckto=""
 nam=""
 read -e -p "Von welchem Ordner soll ein Backup erstellt werden? " bck
 if [ -d "$bck" ]; then
-	echo
+  echo
 elif [[ * ]]; then
-	echo "Dieser Ordner existiert nicht!"
-	jumpto backup
+  echo "Dieser Ordner existiert nicht!"
+  jumpto backup
 fi
 
 clear
@@ -240,39 +240,38 @@ echo
 read -e -p 'Standardmäßig lautet der Pfad: "/root/backup/" ' bckto
 
 if [ -z "$bckto" ]; then
-	bckto="/root/backup/"
-	mkdir -p "$bckto"
-	clear
+  bckto="/root/backup/"
+  mkdir -p "$bckto"
+  clear
 elif [[ * ]]; then
-	echo
+  echo
 fi
 
 clear
 if [ -d "$bckto" ]; then
-	echo
+  echo
 elif [[ * ]]; then
-	for i in . .. ...; do
-		clear
-		echo "Dieser Ordner existiert nicht!"
-		echo "Daher wird er nun erstellt $i"
-		read -t 1
-	done
-	mkdir -p "$bckto"
+  for i in . .. ...; do
+    clear
+    echo "Dieser Ordner existiert nicht!"
+    echo "Daher wird er nun erstellt $i"
+    read -t 1
+  done
+  mkdir -p "$bckto"
 fi
 
 clear
 read -p "Gebe ein Namen für das Backup an: " nam
 clear
-echo "$nam" >> files/backup/name
-echo "$bck" >> files/backup/list
-echo "$bckto" >> files/backup/to
-tar -cpz $bck | (pv -n > $bckto$nam.tgz) 2>&1 | dialog --gauge "Wallie erstellt ein Backup, ich wusste garnicht, dass das möglich ist......" 10 70 0
+echo "$nam" >>files/backup/name
+echo "$bck" >>files/backup/list
+echo "$bckto" >>files/backup/to
+tar -cpz $bck | (pv -n >$bckto$nam.tgz) 2>&1 | dialog --gauge "Wallie erstellt ein Backup, ich wusste garnicht, dass das möglich ist......" 10 70 0
 # rsync -a --delete $bck $bckto/$nam
 clear
 echo "Das Backup wurde erstellt!"
 read -n1
 exit
-
 
 # ██████  ███████ ███████ ████████  ██████  ██████  ███████
 # ██   ██ ██      ██         ██    ██    ██ ██   ██ ██
@@ -284,7 +283,7 @@ restore:
 clear
 echo "Welche der folgenden Backups möchtest du wiederherstellen?"
 echo
-paste files/backup/name files/backup/list > temp
+paste files/backup/name files/backup/list >temp
 cat -n temp
 rm temp
 echo
@@ -298,22 +297,22 @@ echo "				 üBERPRÜFE UNBEDING, OB DAS BACKUP ERFOLGREICH WAR(Die .tar Datei ö
 echo "$reset"
 read -n1 -p 'WARNUNG: Das Zielverzeichnis wird überschrieben !!! (Y/N): ' warn
 case $warn in
-	Y | y | J | j)
-		(tar -xzf $resto$resname.tgz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
-		clear
-		echo "Das Backup wurde wiederhergestellt!"
-		read -t 5 -n 1
-		clear
-		jumpto menue
-		;;
-	N | n)
-		echo -n "$red"
-		echo "Es tut mir leid, doch ich darf das Backup nicht wiederherstellen, wenn Du mich das Zielverzeichnis nicht überschreiben lässt!"
-		echo -n "$reset"
-		read -n1
-		jumpto menue
-		exit
-		;;
+Y | y | J | j)
+  (tar -xzf $resto$resname.tgz -C /) | dialog --gauge "Wallie stell das Backup wiederher, das ist echt unglaublich......" 10 70 0
+  clear
+  echo "Das Backup wurde wiederhergestellt!"
+  read -t 5 -n 1
+  clear
+  jumpto menue
+  ;;
+N | n)
+  echo -n "$red"
+  echo "Es tut mir leid, doch ich darf das Backup nicht wiederherstellen, wenn Du mich das Zielverzeichnis nicht überschreiben lässt!"
+  echo -n "$reset"
+  read -n1
+  jumpto menue
+  exit
+  ;;
 esac
 
 # ██████  ███████ ██      ███████ ████████ ███████
@@ -326,7 +325,7 @@ delete:
 clear
 echo "Welche der folgenden Backups möchtest du löschen?"
 echo
-paste files/backup/name files/backup/list > temp
+paste files/backup/name files/backup/list >temp
 cat -n temp
 rm temp
 echo
@@ -336,18 +335,18 @@ delname=$(sed -ne "$delup"'p' files/backup/name)
 clear
 read -n1 -p "Soll Backup-Datei '$delto$delname.tgz' ebenfalls gelöscht werden?! (Y/N) [Empfohlen: (Y)] " delyn
 case $delyn in
-	Y | y | J | j)
-		rm -r $delto$delname.tgz
-		sed -i "$delup D" "files/backup/list"
-		sed -i "$delup D" "files/backup/name"
-		sed -i "$delup D" "files/backup/to"
-		;;
-	*)
-		echo -n "$red"
-		echo "Der Ordner wurde nicht gelöscht, du musst dies ggf. selber Löschen!"
-		echo -n "$reset"
-		read -t 5 -n 1
-		;;
+Y | y | J | j)
+  rm -r $delto$delname.tgz
+  sed -i "$delup D" "files/backup/list"
+  sed -i "$delup D" "files/backup/name"
+  sed -i "$delup D" "files/backup/to"
+  ;;
+*)
+  echo -n "$red"
+  echo "Der Ordner wurde nicht gelöscht, du musst dies ggf. selber Löschen!"
+  echo -n "$reset"
+  read -t 5 -n 1
+  ;;
 esac
 clear
 echo "Das Backup wurde gelöscht!"
@@ -363,9 +362,9 @@ exit
 
 update:
 if [ -f $(date +%Y-%m-%d) ]; then
-	jumpto menue
+  jumpto menue
 elif [[ * ]]; then
-	clear
+  clear
 fi
 read -t 2 -n 1
 rm 20*
@@ -375,21 +374,21 @@ echo "$red Die neuste Version wird heruntergeladen"
 echo "$reset"
 rm backupscript.sh
 if [ -f ".alpha" ]; then
-	echo "$red"
-	curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/alpha/backupscript.sh --output backupscript.sh
-	echo "$reset"
-	read -t 1
-	chmod +x backupscript.sh
-	./backupscript.sh
-	exit
+  echo "$red"
+  curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/alpha/backupscript.sh --output backupscript.sh
+  echo "$reset"
+  read -t 1
+  chmod +x backupscript.sh
+  ./backupscript.sh
+  exit
 elif [[ * ]]; then
-	echo "$red"
-	curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
-	echo "$reset"
-	read -t 1
-	chmod +x backupscript.sh
-	./backupscript.sh
-	exit
+  echo "$red"
+  curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
+  echo "$reset"
+  read -t 1
+  chmod +x backupscript.sh
+  ./backupscript.sh
+  exit
 fi
 
 # ███████ ███████ ████████ ████████ ██ ███    ██  ██████  ███████
@@ -443,79 +442,79 @@ read -t 0.1
 read -n1 -p "Was mächtest du ändern?" set
 echo -n "$reset"
 case $set in
-	1)
-		if [ -f ".alpha" ]; then
-			clear
-			echo "Du bist bereits im Alpha ring!"
-			echo
-			read -n1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " versionl
-			case $versionl in
-				Y | y | J | j)
-					rm .alpha
-					rm 20*
-					clear
-					echo "Du erhältst nun keine Test-Versionen mehr!"
-					read -t 3 -n 1
-					jumpto update
-					exit
-					;;
-				N | n)
-					touch .alpha
-					rm 20*
-					clear
-					echo "Du erhälstst weiterhin Alpha Updates."
-					read -t 3
-					jumpto update
-					exit
-					;;
-				*)
-					clear
-					read -n1 "Eingabe nicht erkannt"
-					jumpto settings
-					exit
-					;;
-			esac
-		elif [[ * ]]; then
-			clear
-			read -n1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " versionj
-			case $versionj in
-				Y | y | j | J)
-					touch .alpha
-					rm 20*
-					clear
-					echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
-					read -t 3 -n 1
-					jumpto update
-					exit
-					;;
-				N | n)
-					rm .alpha
-					rm 20*
-					clear
-					echo "Du erhältst weiterhin die offizielle Version!"
-					read -t 3 -n 1
-					jumpto update
-					exit
-					;;
-				*)
-					clear
-					read -n1 "Eingabe nicht erkannt"
-					jumpto settings
-					exit
-					;;
-			esac
+1)
+  if [ -f ".alpha" ]; then
+    clear
+    echo "Du bist bereits im Alpha ring!"
+    echo
+    read -n1 -p "Möchtest du diesen jetzt verlassen? (Y/N) " versionl
+    case $versionl in
+    Y | y | J | j)
+      rm .alpha
+      rm 20*
+      clear
+      echo "Du erhältst nun keine Test-Versionen mehr!"
+      read -t 3 -n 1
+      jumpto update
+      exit
+      ;;
+    N | n)
+      touch .alpha
+      rm 20*
+      clear
+      echo "Du erhälstst weiterhin Alpha Updates."
+      read -t 3
+      jumpto update
+      exit
+      ;;
+    *)
+      clear
+      read -n1 "Eingabe nicht erkannt"
+      jumpto settings
+      exit
+      ;;
+    esac
+  elif [[ * ]]; then
+    clear
+    read -n1 -p "Möchtest du jetzt der Alpha beitreten? (Y/N) " versionj
+    case $versionj in
+    Y | y | j | J)
+      touch .alpha
+      rm 20*
+      clear
+      echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
+      read -t 3 -n 1
+      jumpto update
+      exit
+      ;;
+    N | n)
+      rm .alpha
+      rm 20*
+      clear
+      echo "Du erhältst weiterhin die offizielle Version!"
+      read -t 3 -n 1
+      jumpto update
+      exit
+      ;;
+    *)
+      clear
+      read -n1 "Eingabe nicht erkannt"
+      jumpto settings
+      exit
+      ;;
+    esac
 
-		fi
-		;;
-	2)
-		jumpto menue
-		exit
-		;;
-	*)
-		clear
-		read -n1 "Eingabe nicht erkannt"
-		jumpto settings
-		exit
-		;;
+  fi
+  ;;
+2)
+  jumpto menue
+  exit
+  ;;
+*)
+  clear
+  read -n1 "Eingabe nicht erkannt"
+  jumpto settings
+  exit
+  ;;
 esac
 exit
