@@ -202,7 +202,7 @@ paste files/backup/name files/backup/list >temp
 cat -n temp
 rm temp
 read -n1
-jumpto list
+jumpto menue
 exit
 
 # ██████   █████   ██████ ██   ██ ██    ██ ██████
