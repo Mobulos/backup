@@ -1,7 +1,6 @@
 #!/bin/bash
 # Init
-#
-#
+
 #
 # BSD 2-Clause License
 #
@@ -42,6 +41,7 @@ settings=${3:-"settings"}
 backup=${4:-"backup"}
 restore=${5:-"restore"}
 
+# root check
 FILE="/tmp/out.$$"
 GREP="/bin/grep"
 if [ "$(id -u)" != "0" ]; then
@@ -49,8 +49,7 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
-# farbcodes:
-
+# farbcodes
 red=($(tput setaf 1))
 green=($(tput setaf 2))
 yellow=($(tput setaf 3))
@@ -109,8 +108,8 @@ echo "########################################"
 read -t 0.1
 # echo "ACHTUNG|      Alpha Update      |ACHTUNG"
 echo
-echo "Version 2.3.0"
-echo "Update 6.1.2020" #TODO Version und Datum ändern
+echo "Version 2.3.1"
+echo "Update 29.2.2020" #TODO Version und Datum ändern
 echo "$reset"
 echo
 read -t 0.1
